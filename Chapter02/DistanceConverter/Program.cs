@@ -1,5 +1,6 @@
 ﻿namespace DistanceConverter {
     internal class Program {
+        // コマンドライン引数で指定された範囲のフィートとメートルの対応表を出力する
         static void Main(string[] args) {
 
             // デフォルト用の値を設定
