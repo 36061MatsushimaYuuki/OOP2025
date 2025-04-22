@@ -10,6 +10,11 @@ namespace Exercise02 {
         // 定数
         private const double ratio = 0.0254;
 
+        // メートルからインチを求める
+        public static double ToInch(double meter) {
+            return meter / ratio;
+        }
+
         // インチからメートルを求める
         public static double ToMeter(double inch) {
             return inch * ratio;
