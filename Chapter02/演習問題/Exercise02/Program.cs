@@ -34,6 +34,11 @@ namespace Exercise02 {
                 int num = int.Parse(Console.ReadLine());
                 result[i] = num;
             }
+            if (result[0] > result[1]) {
+                int work = result[0];
+                result[0] = result[1];
+                result[1] = work;
+            }
             return result;
         }
 
