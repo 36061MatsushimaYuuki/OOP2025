@@ -37,19 +37,19 @@ namespace Exercise02 {
             return result;
         }
 
-        // メートルからインチへの対応表を出力
-        static void PrintMeterToInchList(int start, int end) {
-            for (int meter = start; meter <= end; meter++) {
-                double inch = InchConverter.ToInch(meter);
-                Console.WriteLine($"{meter} m = {inch:0.0000} inch");
-            }
-        }
-
         // インチからメートルへの対応表を出力
         static void PrintInchToMeterList(int start, int end) {
             for (int inch = start; inch <= end; inch++) {
                 double meter = InchConverter.ToMeter(inch);
                 Console.WriteLine($"{inch} inch = {meter:0.0000} m");
+            }
+        }
+
+        // メートルからインチへの対応表を出力
+        static void PrintMeterToInchList(int start, int end) {
+            for (int meter = start; meter <= end; meter++) {
+                double inch = InchConverter.ToInch(meter);
+                Console.WriteLine($"{meter} m = {inch:0.0000} inch");
             }
         }
     }
