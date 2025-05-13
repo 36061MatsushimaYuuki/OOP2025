@@ -15,10 +15,19 @@
 
         // 2-1-4
         private static void PrintSongs(Song[] songs) {
+#if false
             foreach(var song in songs) {
-                Console.WriteLine($"{song.Title}, {song.ArtistName} "
-                    + TimeSpan.FromSeconds(song.Length).ToString(@"m\:ss"));
+                var minutes = song.Length / 60;
+                var seconds = song.Length % 60;
+                Console.WriteLine($"{song.Title}, {song.ArtistName} {minutes}:{seconds:00}");
             }
+#else
+            // TimeSpan構造体を使った場合
+            foreach(var song in songs) {
+                var timespan = TimeSpan.FromSeconds(song.Length);
+                Console.WriteLine($"{song.Title}, {song.ArtistName} {timespan.ToString(@"m\:ss")}");
+            }
+#endif
         }
     }
 }

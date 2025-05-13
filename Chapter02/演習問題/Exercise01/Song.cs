@@ -9,11 +9,11 @@ namespace Exercise01 {
     public class Song {
 
         /* プロパティ */
-        public string Title { get; set; } = String.Empty;
+        public string Title { get; private set; } = string.Empty;
 
-        public string ArtistName { get; set; } = String.Empty;
+        public string ArtistName { get; private set; } = string.Empty;
 
-        public int Length { get; set; }
+        public int Length { get; private set; }
 
         // 2-1-2
         public Song(string title, string artistName, int length) {
