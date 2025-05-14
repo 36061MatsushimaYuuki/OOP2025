@@ -26,7 +26,7 @@ namespace Exercise01 {
                 // アーティスト名の設定
                 string? artistName;
                 do {
-                    if(isLoop) {
+                    if (isLoop) {
                         Console.WriteLine("エラー：アーティスト名が入力されていません\n");
                     }
                     Console.Write("アーティスト名：");
