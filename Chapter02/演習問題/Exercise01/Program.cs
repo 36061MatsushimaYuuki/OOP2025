@@ -89,8 +89,6 @@ namespace Exercise01 {
                 sumTimespan += timespan;
                 Console.WriteLine($"{song.Title}, {song.ArtistName} {timespan.ToString(@"m\:ss")}");
             }
-            Console.WriteLine();
-            Console.WriteLine($"計：{songs.Count}件 合計時間：{sumTimespan.ToString(@"m\:ss")}");
 #endif
         }
     }
