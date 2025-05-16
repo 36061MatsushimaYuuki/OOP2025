@@ -28,12 +28,15 @@ namespace Exercise02 {
         private static void Exercise2_1(List<string> names) {
             Console.WriteLine("都市名を入力。");
             while (true) {
+                // コンソールから入力
                 var name = Console.ReadLine();
 
+                // NULLか空の場合メソッドから出る
                 if (string.IsNullOrEmpty(name)) {
                     return;
                 }
 
+                // リストから入力値を探してIndexを返す
                 var index = names.FindIndex(s => s == name);
                 Console.WriteLine(index);
             }
