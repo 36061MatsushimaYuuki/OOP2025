@@ -33,11 +33,11 @@ namespace Exercise02 {
 
                 // NULLか空の場合メソッドから出る
                 if (string.IsNullOrEmpty(name)) {
-                    return;
+                    break;
                 }
 
                 // リストから入力値を探してIndexを返す
-                var index = names.FindIndex(s => s == name);
+                var index = names.FindIndex(s => s.Equals(name));
                 Console.WriteLine(index);
             }
         }

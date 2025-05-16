@@ -14,7 +14,7 @@ namespace Exercise01 {
                 Console.Write("曲名：");
                 string? title = Console.ReadLine();
                 // 大文字小文字を区別しない
-                if (title.Equals("") || title.Equals("end", StringComparison.OrdinalIgnoreCase)) {
+                if (string.IsNullOrEmpty(title) || title.Equals("end", StringComparison.OrdinalIgnoreCase)) {
                     Console.WriteLine();
                     break; // ループを抜ける
                     /* return では処理が行われない */
@@ -32,7 +32,7 @@ namespace Exercise01 {
                     Console.Write("アーティスト名：");
                     artistName = Console.ReadLine();
                     isLoop = true; // 二回目判定用
-                } while (artistName.Equals(""));
+                } while (string.IsNullOrEmpty(artistName));
 
                 isLoop = false;
 
