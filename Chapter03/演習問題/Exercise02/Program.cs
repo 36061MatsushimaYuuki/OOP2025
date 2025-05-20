@@ -59,11 +59,11 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_4(List<string> names) {
-            var selected = names.Where(s => s.StartsWith('B'))
-                                .Select(s => s.Length);
+            var obj = names.Where(s => s.StartsWith('B'))
+                                .Select(s => new {s, s.Length});
 
-            foreach (var num in selected) {
-                Console.WriteLine(num);
+            foreach (var data in obj) {
+                Console.WriteLine($"{data.s}: {data.Length}文字");
             }
         }
     }
