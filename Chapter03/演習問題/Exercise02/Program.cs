@@ -1,4 +1,6 @@
 ﻿
+using System.Text.RegularExpressions;
+
 namespace Exercise02 {
     internal class Program {
         static void Main(string[] args) {
@@ -31,7 +33,7 @@ namespace Exercise02 {
                 // コンソールから入力
                 var name = Console.ReadLine();
 
-                // NULLか空の場合メソッドから出る
+                // NULLか空の場合ループから出る
                 if (string.IsNullOrEmpty(name)) {
                     break;
                 }
@@ -43,7 +45,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_2(List<string> names) {
-
+            var cnt = names.Count(s => s.Contains('o'));
+            Console.WriteLine(cnt);
         }
 
         private static void Exercise2_3(List<string> names) {
