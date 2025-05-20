@@ -50,7 +50,7 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_3(List<string> names) {
-
+            var array = names.Where<string>(s => s.Contains('o'));
         }
 
         private static void Exercise2_4(List<string> names) {
