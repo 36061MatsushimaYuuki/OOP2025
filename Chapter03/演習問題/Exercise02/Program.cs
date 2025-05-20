@@ -50,11 +50,17 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_3(List<string> names) {
-            var array = names.Where<string>(s => s.Contains('o'));
+            var array = names
+                .Where(s => s.Contains('o'))
+                .ToArray();
+
+            foreach(var name in array) {
+                Console.WriteLine(name);
+            }
         }
 
         private static void Exercise2_4(List<string> names) {
-
+            
         }
     }
 }
