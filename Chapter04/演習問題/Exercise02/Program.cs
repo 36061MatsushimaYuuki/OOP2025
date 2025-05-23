@@ -33,7 +33,7 @@ namespace Exercise02 {
             var stringNumber = Console.ReadLine();
             if (int.TryParse(stringNumber, out int number)) {
                 // switch文
-                switch(number) {
+                switch (number) {
                     case < 0:
                         Console.WriteLine(number);
                         break;
