@@ -9,6 +9,12 @@
             }
             line = line.Replace("=", ": ").Replace(";", "\n");
             Console.WriteLine(line);
+
+            //短縮版
+            foreach (var pair in line.Split(':')) {
+                var word = pair.Split('=');
+                Console.WriteLine($"{ToJapanese(word[0])}: {word[1]}");
+            }
         }
 
         /// <summary>
@@ -18,10 +24,10 @@
         /// <returns>"「作家」,「代表作」,「誕生年」</returns>
         static string ToJapanese(string key) {
             var result = key switch {
-               "Novelist" => "作家",
-               "BestWork" => "代表作",
-               "Born" => "誕生年",
-               _ => key,
+                "Novelist" => "作家",
+                "BestWork" => "代表作",
+                "Born" => "誕生年",
+                _ => key,
             };
             return result; //エラーをなくすためのダミー
         }
