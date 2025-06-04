@@ -73,7 +73,35 @@ namespace Exercise03 {
                 Console.WriteLine($"{alphabet}: {text.Count(c => c == alphabet)}");
             }
 
-            #region
+            var str = text.ToLower().Replace(" ", "");
+
+            #region 別解 Dictionaryを用いたカウント
+            //Console.WriteLine(); //改行
+            //var alphaDicCount = Enumerable.Range('a', 26)
+            //                    .ToDictionary(num => ((char)num).ToString(), num => 0);
+            //foreach(var alpha in str) {
+            //    alphaDicCount[alpha.ToString()]++;
+            //}
+
+            //foreach(var item in alphaDicCount) {
+            //    Console.WriteLine($"{item.Key}: {item.Value}");
+            //}
+            #endregion
+
+            #region 別解2 配列を用いたカウント
+            //Console.WriteLine(); //改行
+            //var array = Enumerable.Repeat(0, 26).ToArray(); //配列を26個作る
+
+            //foreach (var alpha in str) {
+            //    array[alpha - 'a']++; //文字からaの内部数値を引く
+            //}
+
+            //for (char ch = 'a'; ch <= 'z'; ch++) {
+            //    Console.WriteLine($"{ch}: {array[ch - 'a']}");
+            //}
+            #endregion
+
+            #region 別解 Range後型変換
             //var words = Enumerable.Range('a', 26).Select(c => (char)c);
             //foreach(var word in words) {
             //    Console.WriteLine($"{word}: {text.Count(c => c == word)}");
