@@ -1,9 +1,13 @@
 ﻿
+using System.Diagnostics.Tracing;
+using System.Security;
+using System.Text;
+
 namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var text = "Jackdaws love my big sphinx of quartz";
-
+            #region
             Console.WriteLine("6.3.1");
             Exercise1(text);
 
@@ -18,6 +22,10 @@ namespace Exercise03 {
 
             Console.WriteLine("6.3.5");
             Exercise5(text);
+
+            Console.WriteLine("6.3.99");
+            Exercise6(text);
+            #endregion
         }
 
         private static void Exercise1(string text) {
@@ -32,7 +40,14 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
-            //やらなくてよい
+            var array = text.Split(' ');
+            var sb = new StringBuilder(array[0]);
+            foreach (var word in array.Skip(1)) {
+                sb.Append(" ");
+                sb.Append(word);
+            }
+            //末尾はピリオド（.）で終わる
+            Console.WriteLine(sb + ".");
         }
 
         private static void Exercise4(string text) {
@@ -45,6 +60,19 @@ namespace Exercise03 {
 
             foreach (var word in words)
                 Console.WriteLine(word);
+        }
+
+        private static void Exercise6(string text) {
+            for (var alphabet = 'a'; alphabet <= 'z'; alphabet++) {
+                Console.WriteLine($"{alphabet}: {text.Count(c => c == alphabet)}");
+            }
+
+            #region
+            //var words = Enumerable.Range('a', 26).Select(c => (char)c);
+            //foreach(var word in words) {
+            //    Console.WriteLine($"{word}: {text.Count(c => c == word)}");
+            //}
+            #endregion
         }
     }
 }
