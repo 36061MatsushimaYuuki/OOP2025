@@ -13,7 +13,7 @@ namespace Exercise01
         public int Year { get; init; }
         public int Month { get; init; }
 
-        public bool Is21Century => Year > 2000 && Year <= 2100;
+        public bool Is21Century => 2001 <= Year && Year <= 2100;
 
         public YearMonth AddOneMonth() {
             bool isLastMonth = Month == 12;

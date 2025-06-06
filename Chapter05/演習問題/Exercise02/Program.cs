@@ -1,4 +1,5 @@
 ﻿using Exercise01;
+using System.Linq;
 
 namespace Exercise02 {
     public class Program {
@@ -50,7 +51,11 @@ namespace Exercise02 {
         }
 
         private static void Exercise5(YearMonth[] ymCollection) {
-            
+            var newCollection = new List<YearMonth>();
+            foreach(var ym in ymCollection) {
+                newCollection.Add(ym.AddOneMonth());
+            }
+            newCollection.ForEach(c => Console.Write(c));
         }
     }
 }
