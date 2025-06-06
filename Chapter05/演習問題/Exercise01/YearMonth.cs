@@ -8,23 +8,25 @@ namespace Exercise01
 {
     public class YearMonth
     {
-        private readonly int _year;
-        private readonly int _month;
+        //private readonly int _year;
+        //private readonly int _month;
+        public int Year { get; init; }
+        public int Month { get; init; }
 
-        public bool Is21Century => _year > 2000 && _year <= 2100;
+        public bool Is21Century => Year > 2000 && Year <= 2100;
 
         public YearMonth AddOneMonth() {
-            bool isLastMonth = _month == 12;
-            int calcYear = isLastMonth ? _year + 1 : _year;
-            int calcMonth = isLastMonth ? 1 : _month + 1;
+            bool isLastMonth = Month == 12;
+            int calcYear = isLastMonth ? Year + 1 : Year;
+            int calcMonth = isLastMonth ? 1 : Month + 1;
             return new YearMonth(calcYear, calcMonth);
         }
 
         public YearMonth(int year, int month) {
-            _year = year;
-            _month = month;
+            Year = year;
+            Month = month;
         }
 
-        public override string ToString() => $"{_year}年{_month}月";
+        public override string ToString() => $"{Year}年{Month}月";
     }
 }

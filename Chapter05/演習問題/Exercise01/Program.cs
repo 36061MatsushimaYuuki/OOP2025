@@ -1,7 +1,11 @@
 ﻿namespace Exercise01 {
-    internal class Program {
+    public class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Hello, World!");
+            YearMonth date = new YearMonth(2025, 12);
+            Console.WriteLine(date);
+            Console.WriteLine(date.Is21Century);
+            Console.WriteLine(date.AddOneMonth());
+            Console.WriteLine(date);
         }
     }
 }
