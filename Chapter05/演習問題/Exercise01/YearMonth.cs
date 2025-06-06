@@ -24,5 +24,7 @@ namespace Exercise01
             _year = year;
             _month = month;
         }
+
+        public override string ToString() => $"{_year}年{_month}月";
     }
 }
