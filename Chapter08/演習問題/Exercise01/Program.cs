@@ -12,10 +12,10 @@ namespace Exercise01 {
 
         private static void Exercise1(string text) {
             var countDict = new Dictionary<char, int>();
-            for(var ch = 'A'; ch <= 'Z'; ch++) {
+            for (var ch = 'A'; ch <= 'Z'; ch++) {
                 countDict.Add(ch, text.ToUpper().Count(c => c == ch));
             }
-            foreach (var dict in countDict.OrderBy(c => c)) {
+            foreach (var dict in countDict.OrderBy(c => c)) { //順番に登録しているが、一応ソート
                 if (dict.Value > 0) {
                     Console.WriteLine($"{dict.Key}:{dict.Value}");
                 }
@@ -27,7 +27,7 @@ namespace Exercise01 {
             var countDict = new SortedDictionary<char, int>();
             //②１文字取り出す
             //③大文字に変換
-            foreach(var ch in text.ToUpper()) {
+            foreach (var ch in text.ToUpper()) {
                 //④アルファベットならディクショナリに登録
                 if ('A' <= ch && ch <= 'Z') {
                     if (countDict.ContainsKey(ch)) {
@@ -39,7 +39,7 @@ namespace Exercise01 {
                     }
                 }
             }
-            foreach(var dict in countDict) {
+            foreach (var dict in countDict) {
                 Console.WriteLine($"{dict.Key}:{dict.Value}");
             }
         }
