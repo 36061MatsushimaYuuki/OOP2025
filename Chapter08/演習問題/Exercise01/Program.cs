@@ -39,7 +39,7 @@ namespace Exercise01 {
                     }
                 }
             }
-            foreach (var dict in countDict) {
+            foreach (var dict in countDict.OrderBy(c => c)) { //Sortedだが一応ソートしておく
                 Console.WriteLine($"{dict.Key}:{dict.Value}");
             }
         }
