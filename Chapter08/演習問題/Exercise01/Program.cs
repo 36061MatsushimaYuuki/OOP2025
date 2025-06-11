@@ -15,8 +15,7 @@ namespace Exercise01 {
             for(var ch = 'A'; ch <= 'Z'; ch++) {
                 countDict.Add(ch, text.ToUpper().Count(c => c == ch));
             }
-            countDict.OrderBy(c => c);
-            foreach (var dict in countDict) {
+            foreach (var dict in countDict.OrderBy(c => c)) {
                 if (dict.Value > 0) {
                     Console.WriteLine($"{dict.Key}:{dict.Value}");
                 }
