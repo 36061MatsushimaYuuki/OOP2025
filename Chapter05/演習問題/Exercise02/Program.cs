@@ -33,29 +33,44 @@ namespace Exercise02 {
         // 5.2.3
         // ここにメソッドを作成（メソッド名：FindFirst21C）
         private static YearMonth FindFirst21C(YearMonth[] ymCollection) {
-            YearMonth result = null;
-            foreach(var ym in ymCollection) {
-                if(ym.Is21Century) {
-                    result = ym;
-                    break;
-                }
+            //YearMonth result = null;
+            //foreach(var ym in ymCollection) {
+            //    if(ym.Is21Century) {
+            //        result = ym;
+            //        break;
+            //    }
+            //}
+            //return result;
+
+            // 解答
+            foreach (var ym in ymCollection) {
+                if (ym.Is21Century)
+                    return ym;
             }
-            return result;
+            return null;
         }
 
         // 5.2.4
         private static void Exercise4(YearMonth[] ymCollection) {
-            var result = FindFirst21C(ymCollection);
-            var outputText = result is null ? "21世紀のデータはありません" : result.ToString();
-            Console.WriteLine(outputText);
+            //var result = FindFirst21C(ymCollection);
+            //var outputText = result is null ? "21世紀のデータはありません" : result.ToString();
+            //Console.WriteLine(outputText);
+
+            // 解答
+            // null合体演算子、null条件演算子
+            Console.WriteLine(FindFirst21C(ymCollection)?.ToString() ?? "21世紀のデータはありません");
         }
 
         private static void Exercise5(YearMonth[] ymCollection) {
-            var newCollection = new List<YearMonth>();
-            foreach(var ym in ymCollection) {
-                newCollection.Add(ym.AddOneMonth());
-            }
-            newCollection.ForEach(c => Console.Write(c));
+            //var newCollection = new List<YearMonth>();
+            //foreach(var ym in ymCollection) {
+            //    newCollection.Add(ym.AddOneMonth());
+            //}
+            //newCollection.ForEach(c => Console.Write(c));
+
+            // 解答
+            var array = ymCollection.Select(ym => ym.AddOneMonth()).ToArray();
+            Exercise2(array);
         }
     }
 }
