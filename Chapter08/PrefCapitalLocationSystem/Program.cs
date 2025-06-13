@@ -37,9 +37,7 @@
 
                 //県庁所在地登録処理
 
-                if (pref != "" && prefCaptalLocation != "") {
-                    prefOfficeDict[pref] = prefCaptalLocation;
-                }
+                prefOfficeDict[pref] = prefCaptalLocation;
 
 
                 Console.WriteLine();//改行
