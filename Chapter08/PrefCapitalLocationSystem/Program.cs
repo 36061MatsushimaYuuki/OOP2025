@@ -37,8 +37,7 @@
 
                 //県庁所在地登録処理
 
-                prefOfficeDict[pref] = prefCaptalLocation;
-
+                prefOfficeDict[pref] = prefCaptalLocation ?? "* 未入力 *";
 
                 Console.WriteLine();//改行
             }
@@ -90,9 +89,8 @@
 
             if (searchPref == null) return;
 
-            if (prefOfficeDict.ContainsKey(searchPref)) {
-                Console.WriteLine($"{searchPref}の県庁所在地は、{prefOfficeDict.GetValueOrDefault(searchPref)}です。");
-            }
+            // prefOfficeDict[searchPref] is Value!!
+            Console.WriteLine(prefOfficeDict.ContainsKey(searchPref) ? $"{searchPref}の県庁所在地は、{prefOfficeDict[searchPref]}です。" : "見つかりませんでした。");
 
             //if(prefOfficeDict.TryGetValue(searchPref, out String? value)) {
             //    Console.WriteLine($"{searchPref}の県庁所在地は、{value}です。");
