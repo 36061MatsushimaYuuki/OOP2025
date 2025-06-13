@@ -15,7 +15,7 @@ namespace Exercise01 {
             for (var ch = 'A'; ch <= 'Z'; ch++) {
                 countDict.Add(ch, text.ToUpper().Count(c => c == ch));
             }
-            foreach (var dict in countDict.OrderBy(c => c)) { //順番に登録しているが、一応ソート
+            foreach (var dict in countDict.OrderBy(c => c.Key)) { //順番に登録しているが、一応ソート
                 if (dict.Value > 0) {
                     Console.WriteLine($"{dict.Key}:{dict.Value}");
                 }
@@ -39,7 +39,7 @@ namespace Exercise01 {
                     }
                 }
             }
-            foreach (var dict in countDict.OrderBy(c => c)) { //Sortedだが一応ソートしておく
+            foreach (var dict in countDict) {
                 Console.WriteLine($"{dict.Key}:{dict.Value}");
             }
         }
