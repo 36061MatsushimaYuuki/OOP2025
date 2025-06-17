@@ -45,4 +45,8 @@ public class Abbreviations {
             }
         }
     }
+
+    public IEnumerable<KeyValuePair<string, string>> GetAll() {
+        return _dict;
+    }
 }

@@ -48,6 +48,8 @@
             foreach (var (key, value) in abbrs.FindLength(3)) {
                 Console.WriteLine($"{key}={value}");
             }
+
+            var query = abbrs.GetAll().Where(x => x.Key.Length == 3);
         }
     }
 }
