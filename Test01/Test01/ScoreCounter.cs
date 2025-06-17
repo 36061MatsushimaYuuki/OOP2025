@@ -13,7 +13,7 @@
             var scores = new List<Student>();
             var lines = File.ReadAllLines(filePath);
             //読み込んだ行数分繰り返す
-            foreach(var line in lines) {
+            foreach (var line in lines) {
                 string[] items = line.Split(',');
                 //Studentオブジェクトを生成
                 var score = new Student() {
@@ -30,9 +30,9 @@
         //メソッドの概要： 科目ごとの点数を集計する
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
-            foreach(var score in _score) {
+            foreach (var score in _score) {
                 //辞書に科目の点数データがあれば合計、なければ新しく追加する
-                if(dict.ContainsKey(score.Subject))
+                if (dict.ContainsKey(score.Subject))
                     dict[score.Subject] += score.Score;
                 else
                     dict[score.Subject] = score.Score;
