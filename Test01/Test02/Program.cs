@@ -73,7 +73,7 @@ namespace Test02 {
         //問題３　昇順に並べて表示（遅延実行とする）
         //　　　　出力結果【12 14 17 20 31 35 40 48 53 76 87 91 94】
         private static void Exercise03(int[] numbers) {
-            foreach(var number in numbers.Order()) {
+            foreach (var number in numbers.Order()) {
                 Console.Write(number + " ");
             }
         }
@@ -81,7 +81,7 @@ namespace Test02 {
         //問題４　10以上50以下の数字のみを表示（即時実行でも可とする）
         //　　　　出力結果【12 14 20 40 35 31 17 48】
         private static void Exercise04(int[] numbers) {
-            foreach(var number in numbers.Where(n => 10 <= n && n <= 50)) {
+            foreach (var number in numbers.Where(n => 10 <= n && n <= 50)) {
                 Console.Write(number + " ");
             }
         }
@@ -125,7 +125,7 @@ namespace Test02 {
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-            foreach(var city in cities.Select(s => s + " : " + s.Length + "文字")) {
+            foreach (var city in cities.Select(s => s + " : " + s.Length + "文字")) {
                 Console.WriteLine(city);
             }
         }
@@ -141,7 +141,7 @@ namespace Test02 {
         //          New Delhi : 9文字
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
-            foreach(var city in cities.OrderBy(s => s.Length).Select(s => s + " : " + s.Length + "文字")) {
+            foreach (var city in cities.OrderBy(s => s.Length).Select(s => s + " : " + s.Length + "文字")) {
                 Console.WriteLine(city);
             }
         }
@@ -151,7 +151,7 @@ namespace Test02 {
         //        【London
         //          Berlin】
         private static void Exercise10(List<string> cities) {
-            foreach(var city in cities.Where(s => s.Length == 6)) {
+            foreach (var city in cities.Where(s => s.Length == 6)) {
                 Console.WriteLine(city);
             }
         }
