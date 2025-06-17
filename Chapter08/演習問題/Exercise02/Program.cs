@@ -35,6 +35,19 @@
                 Console.WriteLine($"{key}={value}");
             }
             Console.WriteLine();
+
+            // 8.2.3
+            // Countプロパティの利用例
+            Console.WriteLine($"登録件数：{abbrs.Count}");
+
+            // Removeメソッドの利用例
+            Console.WriteLine(abbrs.Remove("WHO") ? "削除が完了しました" : "削除失敗");
+            Console.WriteLine();
+
+            // 8.2.4
+            foreach (var (key, value) in abbrs.FindLength(3)) {
+                Console.WriteLine($"{key}={value}");
+            }
         }
     }
 }

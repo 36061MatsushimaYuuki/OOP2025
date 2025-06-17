@@ -30,4 +30,18 @@ public class Abbreviations {
             }
         }
     }
+
+    //8.2.1
+    public int Count => _dict.Count;
+
+    //8.2.2
+    public bool Remove(string abbr) => _dict.Remove(abbr) ? true : false;
+
+    public IEnumerable<(string, string)> FindLength(int num) {
+        foreach (var (key, value) in _dict) {
+            if (key.Length == num) {
+                yield return (key, value);
+            }
+        }
+    }
 }
