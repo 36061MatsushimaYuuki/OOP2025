@@ -7,7 +7,7 @@
             _score = ReadScore(filePath);
         }
 
-        //メソッドの概要： ファイルを読み込む
+        //メソッドの概要： 生徒のテストデータを読み込み、Studentオブジェクトのリストを返す
         private static IEnumerable<Student> ReadScore(string filePath) {
             var scores = new List<Student>();
             var lines = File.ReadAllLines(filePath);
@@ -24,7 +24,7 @@
             return scores;
         }
 
-        //メソッドの概要： 
+        //メソッドの概要： 科目ごとの点数を集計する
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
             foreach(var score in _score) {
