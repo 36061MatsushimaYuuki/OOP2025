@@ -35,7 +35,7 @@ public class Abbreviations {
     public int Count => _dict.Count;
 
     //8.2.2
-    public bool Remove(string abbr) => _dict.Remove(abbr) ? true : false;
+    public bool Remove(string abbr) => _dict.Remove(abbr);
 
     //8.2.4
     public IEnumerable<(string, string)> FindLength(int num) {
