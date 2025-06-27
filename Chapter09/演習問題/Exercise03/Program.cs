@@ -14,7 +14,7 @@ namespace Exercise03 {
             stwatch.Start();
             Thread.Sleep(1000);
             stwatch.Stop();
-            Console.WriteLine("ストップウォッチ処理時間は{0}ミリ秒でした", stwatch.ElapsedTicks / 10000.0);
+            Console.WriteLine("ストップウォッチ処理時間は{0}ミリ秒でした", stwatch.Elapsed);
         }
     }
 
