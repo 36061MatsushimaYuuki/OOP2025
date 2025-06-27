@@ -28,9 +28,11 @@ namespace Exercise02 {
 
         // 9.2.1【ここにプログラムを作成する】
         static DateTime NextWeek(DateTime date, DayOfWeek dayOfWeek) {
-            //あと何日で次の週か求め、求める曜日を足す
-            var addDays = 7 - (int)date.DayOfWeek + (int)dayOfWeek;
-            return date.AddDays(addDays);
+            //あと何日で次の週か求める
+            var addDays = 7 - (int)date.DayOfWeek;
+            var nextweek = date.AddDays(addDays);
+            var days = (int)dayOfWeek; //求める曜日を足す
+            return nextweek.AddDays(days);
         }
 
         private static void Exercise2() {
