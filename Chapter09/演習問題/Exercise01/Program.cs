@@ -12,7 +12,7 @@ namespace Exercise01 {
         private static void DisplayDatePattern1(DateTime dateTime) {
             // 2024/03/09 19:03
             // string.Formatを使った例
-            var format = string.Format("{0:yyyy/MM/dd HH:mm}", dateTime);
+            var format = string.Format($"{dateTime:yyyy/MM/dd HH:mm}");
             Console.WriteLine(format);
         }
 
