@@ -37,6 +37,10 @@ namespace Section01 {
 
             Console.WriteLine($"1月1日から{dayOfYear}日目です");
 
+            var age = GetAge(birthday, now);
+
+            Console.WriteLine($"あなたは{age}歳です");
+
             //うるう年の判定プログラムを作成する
             Console.WriteLine();
             Console.WriteLine("閏年判定プログラム");
@@ -52,6 +56,14 @@ namespace Section01 {
                 var nowTime = DateTime.Now;
                 Console.Write($"\r{nowTime}");
             }
+        }
+
+        static int GetAge(DateTime birthday, DateTime targetDay) {
+            var age = targetDay.Year - birthday.Year;
+            if(targetDay < birthday.AddYears(age)) {
+                age--;
+            }
+            return age;
         }
     }
 }
