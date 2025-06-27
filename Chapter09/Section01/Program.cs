@@ -33,6 +33,10 @@ namespace Section01 {
             Console.WriteLine($"{japaneseDate}は{weekday}です。");
             Console.WriteLine($"生まれてから{livingDate.Days}日目です");
 
+            var dayOfYear = now.DayOfYear;
+
+            Console.WriteLine($"1月1日から{dayOfYear}日目です");
+
             //うるう年の判定プログラムを作成する
             Console.WriteLine();
             Console.WriteLine("閏年判定プログラム");
