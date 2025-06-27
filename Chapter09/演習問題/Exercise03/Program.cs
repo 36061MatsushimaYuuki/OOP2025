@@ -1,4 +1,6 @@
-﻿namespace Exercise03 {
+﻿using System.Diagnostics;
+
+namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var tw = new TimeWatch();
@@ -7,7 +9,12 @@
             Thread.Sleep(1000);
             TimeSpan duration = tw.Stop();
             Console.WriteLine("処理時間は{0}ミリ秒でした", duration.TotalMilliseconds);
-
+            // ストップウォッチ
+            var stwatch = new Stopwatch();
+            stwatch.Start();
+            Thread.Sleep(1000);
+            stwatch.Stop();
+            Console.WriteLine("ストップウォッチ処理時間は{0}ミリ秒でした", stwatch.ElapsedTicks / 10000.0);
         }
     }
 
