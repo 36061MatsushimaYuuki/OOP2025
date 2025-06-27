@@ -7,6 +7,8 @@ namespace Section01 {
             var today = new DateTime(2025, 7, 12); //日付
             var now = DateTime.Now;     //日付と時刻
 
+            /*なんか消えたので萎えた*/
+
             //Console.WriteLine($"Today:{today.Month}");
             //Console.WriteLine($"Now:{now}");
 
