@@ -28,8 +28,7 @@ namespace Exercise03 {
 
         public TimeSpan Stop() {
             //経過時間を返却する
-            TimeSpan result = DateTime.Now - _time;
-            return result; // ←エラーを出さないためだけのダミー（使い方も参考にしない）
+            return DateTime.Now - _time;
         }
     }
 }
