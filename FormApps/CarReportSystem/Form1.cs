@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Net.Http.Headers;
+using System.Windows.Forms;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
@@ -10,11 +11,15 @@ namespace CarReportSystem {
         public Form1() {
             InitializeComponent();
             dgvRecord.DataSource = listCarReports;
-            dtpDate.Value = DateTime.Today;
-            rbOther.Checked = true;
+        }
+
+        //コンストラクタの後に呼ばれる
+        private void Form1_Load(object sender, EventArgs e) {
+            InputItemsAllClear();
         }
 
         private void btPicOpen_Click(object sender, EventArgs e) {
+            ofdPicFileOpen.Filter = "画像ファイル (*.jpg;.jpeg;*.png;*.webp)|*.jpg;.jpeg;*.png;*.webp";
             if (ofdPicFileOpen.ShowDialog() == DialogResult.OK) {
                 pbPicture.Image = Image.FromFile(ofdPicFileOpen.FileName);
             }
