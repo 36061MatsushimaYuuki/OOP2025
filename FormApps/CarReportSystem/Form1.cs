@@ -147,7 +147,7 @@ namespace CarReportSystem {
         private void btRecordModify_Click(object sender, EventArgs e) {
             if (dgvRecord.CurrentRow != null && dgvRecord.Rows.Count > 0) {
                 if (MessageBox.Show("現在のレコードを修正しますか？", "試乗レポート管理システム", MessageBoxButtons.OKCancel, MessageBoxIcon.None) == DialogResult.OK) {
-                    /*
+                    /* リストの中身が変わらないので廃止
                     dgvRecord.CurrentRow.Cells["Date"].Value = dtpDate.Value;
                     dgvRecord.CurrentRow.Cells["Author"].Value = cbAuthor.Text;
                     dgvRecord.CurrentRow.Cells["Maker"].Value = GetRadioButtonMaker();
@@ -155,16 +155,28 @@ namespace CarReportSystem {
                     dgvRecord.CurrentRow.Cells["Report"].Value = tbReport.Text;
                     dgvRecord.CurrentRow.Cells["Picture"].Value = pbPicture.Image;
                     */
-                    var carReport = new CarReport {
-                        Date = dtpDate.Value,
-                        Author = cbAuthor.Text,
-                        Maker = GetRadioButtonMaker(),
-                        CarName = cbCarName.Text,
-                        Report = tbReport.Text,
-                        Picture = pbPicture.Image,
-                    };
-                    listCarReports[dgvRecord.CurrentRow.Index] = carReport;
+
+                    //var carReport = new CarReport {
+                    //    Date = dtpDate.Value,
+                    //    Author = cbAuthor.Text,
+                    //    Maker = GetRadioButtonMaker(),
+                    //    CarName = cbCarName.Text,
+                    //    Report = tbReport.Text,
+                    //    Picture = pbPicture.Image,
+                    //};
+                    ////選択されたインデックスのリストの中身を置き換える
+                    //listCarReports[dgvRecord.CurrentRow.Index] = carReport;
+
+                    var index = dgvRecord.CurrentRow.Index;
+                    listCarReports[index].Date = dtpDate.Value;
+                    listCarReports[index].Author = cbAuthor.Text;
+                    listCarReports[index].Maker = GetRadioButtonMaker();
+                    listCarReports[index].CarName = cbCarName.Text;
+                    listCarReports[index].Report = tbReport.Text;
+                    listCarReports[index].Picture = pbPicture.Image;
+
                     InputItemsAllClear();
+                    dgvRecord.Refresh();
                 }
             }
         }
