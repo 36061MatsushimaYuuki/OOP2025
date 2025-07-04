@@ -147,12 +147,23 @@ namespace CarReportSystem {
         private void btRecordModify_Click(object sender, EventArgs e) {
             if (dgvRecord.CurrentRow != null && dgvRecord.Rows.Count > 0) {
                 if (MessageBox.Show("現在のレコードを修正しますか？", "試乗レポート管理システム", MessageBoxButtons.OKCancel, MessageBoxIcon.None) == DialogResult.OK) {
+                    /*
                     dgvRecord.CurrentRow.Cells["Date"].Value = dtpDate.Value;
                     dgvRecord.CurrentRow.Cells["Author"].Value = cbAuthor.Text;
                     dgvRecord.CurrentRow.Cells["Maker"].Value = GetRadioButtonMaker();
                     dgvRecord.CurrentRow.Cells["CarName"].Value = cbCarName.Text;
                     dgvRecord.CurrentRow.Cells["Report"].Value = tbReport.Text;
                     dgvRecord.CurrentRow.Cells["Picture"].Value = pbPicture.Image;
+                    */
+                    var carReport = new CarReport {
+                        Date = dtpDate.Value,
+                        Author = cbAuthor.Text,
+                        Maker = GetRadioButtonMaker(),
+                        CarName = cbCarName.Text,
+                        Report = tbReport.Text,
+                        Picture = pbPicture.Image,
+                    };
+                    listCarReports[dgvRecord.CurrentRow.Index] = carReport;
                     InputItemsAllClear();
                 }
             }

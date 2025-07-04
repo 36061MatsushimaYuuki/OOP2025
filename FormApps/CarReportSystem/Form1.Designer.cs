@@ -347,7 +347,7 @@
             // 
             // ofdPicFileOpen
             // 
-            ofdPicFileOpen.FileName = "openFileDialog1";
+            ofdPicFileOpen.FileName = "image.jpg";
             // 
             // btNewRecord
             // 
