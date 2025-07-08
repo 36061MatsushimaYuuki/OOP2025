@@ -4,12 +4,16 @@ using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
     public partial class Form1 : Form {
         //カーレポート管理用リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
+
+        //設定クラスのインスタンスを生成
+        Settings settings = new Settings();
 
         public Form1() {
             InitializeComponent();
@@ -25,6 +29,31 @@ namespace CarReportSystem {
             ////データグリッドビューの列名に別名を設定
             //dgvRecord.Columns[0].HeaderText = "日付";
             //dgvRecord.Columns[1].HeaderText = "記録者";
+
+            //設定ファイルを読み込み背景色を設定する（逆シリアル化）
+            try {
+                using (var reader = XmlReader.Create("settings.xml")) {
+                    var serializer = new XmlSerializer(typeof(Settings));
+                    settings = (Settings)serializer.Deserialize(reader);
+                    BackColor = Color.FromArgb(settings.MainFormBackColor);
+                }
+            }
+            catch (Exception) {
+
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            //設定ファイルへ色情報を保存する処理（シリアル化）
+            try {
+                using (var writer = XmlWriter.Create("settings.xml")) {
+                    var serializer = new XmlSerializer(settings.GetType());
+                    serializer.Serialize(writer, settings);
+                }
+            }
+            catch (Exception) {
+
+            }
         }
 
         private void btPicOpen_Click(object sender, EventArgs e) {
@@ -226,12 +255,14 @@ namespace CarReportSystem {
         private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (cdColor.ShowDialog() == DialogResult.OK) {
                 BackColor = cdColor.Color;
+                //設定ファイルへ保存
+                settings.MainFormBackColor = cdColor.Color.ToArgb(); //背景色を設定インスタンスへ設定
             }
         }
 
         //ファイルオープン処理
         private void reportOpenFile() {
-            if(ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
+            if (ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
                 try {
                     //逆シリアル化でバイナリ形式を取り込む
 #pragma warning disable SYSLIB0011 // 型またはメンバーが旧型式です
@@ -247,7 +278,7 @@ namespace CarReportSystem {
                         cbAuthor.Items.Clear();
                         cbCarName.Items.Clear();
                         //コンボボックスに登録
-                        foreach(var item in listCarReports) { //1つずつ取り出す
+                        foreach (var item in listCarReports) { //1つずつ取り出す
                             setCbAuthor(item.Author);
                             setCbCarName(item.CarName);
                         }
