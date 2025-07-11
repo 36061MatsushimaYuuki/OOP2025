@@ -23,6 +23,7 @@
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -51,6 +52,7 @@
             btNewRecord = new Button();
             ssMessageArea = new StatusStrip();
             tsslbMessage = new ToolStripStatusLabel();
+            tsslDateTime = new ToolStripStatusLabel();
             menuStrip1 = new MenuStrip();
             ファイルToolStripMenuItem = new ToolStripMenuItem();
             開くToolStripMenuItem = new ToolStripMenuItem();
@@ -65,6 +67,7 @@
             groupBox1 = new GroupBox();
             sfdReportFileSave = new SaveFileDialog();
             ofdReportFileOpen = new OpenFileDialog();
+            dateTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dgvRecord).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPicture).BeginInit();
             ssMessageArea.SuspendLayout();
@@ -271,7 +274,7 @@
             // 
             // pbPicture
             // 
-            pbPicture.BackColor = SystemColors.ActiveBorder;
+            pbPicture.BackColor = SystemColors.ActiveCaption;
             pbPicture.BorderStyle = BorderStyle.FixedSingle;
             pbPicture.Location = new Point(613, 90);
             pbPicture.Name = "pbPicture";
@@ -366,7 +369,7 @@
             // 
             // ssMessageArea
             // 
-            ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage });
+            ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage, tsslDateTime });
             ssMessageArea.Location = new Point(0, 656);
             ssMessageArea.Name = "ssMessageArea";
             ssMessageArea.Size = new Size(966, 22);
@@ -377,6 +380,14 @@
             // 
             tsslbMessage.Name = "tsslbMessage";
             tsslbMessage.Size = new Size(0, 17);
+            // 
+            // tsslDateTime
+            // 
+            tsslDateTime.Font = new Font("Yu Gothic UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 128);
+            tsslDateTime.Name = "tsslDateTime";
+            tsslDateTime.Size = new Size(951, 17);
+            tsslDateTime.Spring = true;
+            tsslDateTime.TextAlign = ContentAlignment.MiddleRight;
             // 
             // menuStrip1
             // 
@@ -466,6 +477,10 @@
             // 
             ofdReportFileOpen.FileName = "openFileDialog1";
             // 
+            // dateTimer
+            // 
+            dateTimer.Tick += dateTimer_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -554,5 +569,7 @@
         private GroupBox groupBox1;
         private SaveFileDialog sfdReportFileSave;
         private OpenFileDialog ofdReportFileOpen;
+        private ToolStripStatusLabel tsslDateTime;
+        private System.Windows.Forms.Timer dateTimer;
     }
 }

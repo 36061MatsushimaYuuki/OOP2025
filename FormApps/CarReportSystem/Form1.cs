@@ -41,6 +41,7 @@ namespace CarReportSystem {
             catch (Exception) {
 
             }
+            dateTimer.Start();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
@@ -54,6 +55,7 @@ namespace CarReportSystem {
             catch (Exception) {
 
             }
+            dateTimer.Stop();
         }
 
         private void btPicOpen_Click(object sender, EventArgs e) {
@@ -329,6 +331,11 @@ namespace CarReportSystem {
 
         private void ŠJ‚­ToolStripMenuItem_Click(object sender, EventArgs e) {
             reportOpenFile();
+        }
+
+        private void dateTimer_Tick(object sender, EventArgs e) {
+            var now = DateTime.Now;
+            tsslDateTime.Text = now.ToString("yyyy/MM/dd hh:mm:ss");
         }
     }
 }
