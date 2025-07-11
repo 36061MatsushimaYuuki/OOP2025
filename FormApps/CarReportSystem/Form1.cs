@@ -262,6 +262,9 @@ namespace CarReportSystem {
 
         //ファイルオープン処理
         private void reportOpenFile() {
+            //拡張子の設定
+            ofdReportFileOpen.Filter = "Reportファイル(*.report)|*.report|すべてのファイル (*.*)|*.*";
+
             if (ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
                 try {
                     //逆シリアル化でバイナリ形式を取り込む
