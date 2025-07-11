@@ -369,6 +369,7 @@
             // 
             // ssMessageArea
             // 
+            ssMessageArea.BackColor = SystemColors.Control;
             ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage, tsslbDateTime });
             ssMessageArea.Location = new Point(0, 656);
             ssMessageArea.Name = "ssMessageArea";
