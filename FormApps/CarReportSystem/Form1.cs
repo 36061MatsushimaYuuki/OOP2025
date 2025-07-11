@@ -294,6 +294,12 @@ namespace CarReportSystem {
 
         //ファイルセーブ処理
         private void reportSaveFile() {
+            //拡張子を自動的につける
+            sfdReportFileSave.AddExtension = true;
+
+            //拡張子の設定
+            sfdReportFileSave.Filter = "Reportファイル(*.report)|*.report|すべてのファイル (*.*)|*.*";
+
             if (sfdReportFileSave.ShowDialog() == DialogResult.OK) {
                 try {
                     //バイナリ形式でシリアル化
