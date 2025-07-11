@@ -52,7 +52,7 @@
             btNewRecord = new Button();
             ssMessageArea = new StatusStrip();
             tsslbMessage = new ToolStripStatusLabel();
-            tsslDateTime = new ToolStripStatusLabel();
+            tsslbDateTime = new ToolStripStatusLabel();
             menuStrip1 = new MenuStrip();
             ファイルToolStripMenuItem = new ToolStripMenuItem();
             開くToolStripMenuItem = new ToolStripMenuItem();
@@ -369,7 +369,7 @@
             // 
             // ssMessageArea
             // 
-            ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage, tsslDateTime });
+            ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage, tsslbDateTime });
             ssMessageArea.Location = new Point(0, 656);
             ssMessageArea.Name = "ssMessageArea";
             ssMessageArea.Size = new Size(966, 22);
@@ -381,13 +381,13 @@
             tsslbMessage.Name = "tsslbMessage";
             tsslbMessage.Size = new Size(0, 17);
             // 
-            // tsslDateTime
+            // tsslbDateTime
             // 
-            tsslDateTime.Font = new Font("Yu Gothic UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            tsslDateTime.Name = "tsslDateTime";
-            tsslDateTime.Size = new Size(951, 17);
-            tsslDateTime.Spring = true;
-            tsslDateTime.TextAlign = ContentAlignment.MiddleRight;
+            tsslbDateTime.Font = new Font("Yu Gothic UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 128);
+            tsslbDateTime.Name = "tsslbDateTime";
+            tsslbDateTime.Size = new Size(951, 17);
+            tsslbDateTime.Spring = true;
+            tsslbDateTime.TextAlign = ContentAlignment.MiddleRight;
             // 
             // menuStrip1
             // 
@@ -569,7 +569,7 @@
         private GroupBox groupBox1;
         private SaveFileDialog sfdReportFileSave;
         private OpenFileDialog ofdReportFileOpen;
-        private ToolStripStatusLabel tsslDateTime;
+        private ToolStripStatusLabel tsslbDateTime;
         private System.Windows.Forms.Timer dateTimer;
     }
 }

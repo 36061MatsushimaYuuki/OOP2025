@@ -31,15 +31,21 @@ namespace CarReportSystem {
             //dgvRecord.Columns[1].HeaderText = "記録者";
 
             //設定ファイルを読み込み背景色を設定する（逆シリアル化）
-            try {
-                using (var reader = XmlReader.Create("settings.xml")) {
-                    var serializer = new XmlSerializer(typeof(Settings));
-                    settings = (Settings)serializer.Deserialize(reader);
-                    BackColor = Color.FromArgb(settings.MainFormBackColor);
+            if(File.Exists("settings.xml")) { //存在するかチェック
+                try {
+                    using (var reader = XmlReader.Create("settings.xml")) {
+                        var serializer = new XmlSerializer(typeof(Settings));
+                        settings = (Settings)serializer.Deserialize(reader);
+                        BackColor = Color.FromArgb(settings.MainFormBackColor);
+                    }
                 }
-            }
-            catch (Exception) {
-
+                catch (ArgumentException ex) {
+                    //初期の透明カラーの場合エラーが発生するため、無視
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = "設定ファイル読み込みエラー";
+                    MessageBox.Show(ex.Message);
+                }
             }
             dateTimer.Start();
         }
@@ -52,8 +58,9 @@ namespace CarReportSystem {
                     serializer.Serialize(writer, settings);
                 }
             }
-            catch (Exception) {
-
+            catch (Exception ex) {
+                tsslbMessage.Text = "設定ファイル書き出しエラー";
+                MessageBox.Show(ex.Message);
             }
             dateTimer.Stop();
         }
@@ -335,7 +342,7 @@ namespace CarReportSystem {
 
         private void dateTimer_Tick(object sender, EventArgs e) {
             var now = DateTime.Now;
-            tsslDateTime.Text = now.ToString("yyyy/MM/dd hh:mm:ss");
+            tsslbDateTime.Text = now.ToString("yyyy/MM/dd hh:mm:ss");
         }
     }
 }
