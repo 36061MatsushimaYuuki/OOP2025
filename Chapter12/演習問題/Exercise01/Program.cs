@@ -48,9 +48,6 @@ namespace Exercise01 {
                 WriteIndented = true
             };
             return JsonSerializer.Serialize(emp, options);
-            //UTF-8バイト配列にシリアル化
-            //byte[] utf8Bytes = JsonSerializer.SerializeToUtf8Bytes(emp, options);
-            //File.WriteAllBytes(filePath, utf8Bytes);
         }
 
         static Employee? Deserialize(string text) {
@@ -72,6 +69,9 @@ namespace Exercise01 {
             string jsonString = JsonSerializer.Serialize(employees, options);
             try {
                 File.WriteAllText(filePath, jsonString); //ファイル出力
+                //UTF-8バイト配列にシリアル化
+                //byte[] utf8Bytes = JsonSerializer.SerializeToUtf8Bytes(employees, options);
+                //File.WriteAllBytes(filePath, utf8Bytes);
             }
             catch (Exception ex) {
                 Console.WriteLine("エラー: " + ex.Message);
