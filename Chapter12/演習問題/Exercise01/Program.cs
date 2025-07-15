@@ -67,7 +67,12 @@ namespace Exercise01 {
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(employees, options);
-            File.WriteAllText(filePath, jsonString); //ファイル出力
+            try {
+                File.WriteAllText(filePath, jsonString); //ファイル出力
+            }
+            catch (Exception ex) {
+                Console.WriteLine("エラー: " + ex.Message);
+            }
         }
 
         //問題12.1.3
