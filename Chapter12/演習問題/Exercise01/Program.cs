@@ -80,12 +80,12 @@ namespace Exercise01 {
 
         //問題12.1.3
         //ファイルを読み込み逆シリアル化
-        static Employee[]? Deserialize_f(string filePath) {
+        static Employee[] Deserialize_f(string filePath) {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             var text = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<Employee[]>(text, options);
+            return JsonSerializer.Deserialize<Employee[]>(text, options) ?? [];
         }
     }
 

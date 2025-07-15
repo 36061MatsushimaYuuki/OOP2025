@@ -9,15 +9,15 @@ namespace Exercise03 {
             ToXmlFile(employees);
         }
 
-        static Employee[]? Deserialize(string filePath) {
+        static Employee[] Deserialize(string filePath) {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             var text = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<Employee[]>(text, options);
+            return JsonSerializer.Deserialize<Employee[]>(text, options) ?? [];
         }
 
-        static void ToXmlFile(Employee[]? employees) {
+        static void ToXmlFile(Employee[] employees) {
             try {
                 using (var writer = XmlWriter.Create("employees.xml")) {
                     XmlRootAttribute xRoot = new XmlRootAttribute { //ルートの要素名(タグ名)の変更
