@@ -33,6 +33,7 @@
             label2 = new Label();
             cbUrl = new ComboBox();
             btFavoriteAdd = new Button();
+            btReload = new Button();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
             // 
@@ -66,9 +67,9 @@
             wvRssLink.BackColor = SystemColors.Control;
             wvRssLink.CreationProperties = null;
             wvRssLink.DefaultBackgroundColor = Color.WhiteSmoke;
-            wvRssLink.Location = new Point(560, 166);
+            wvRssLink.Location = new Point(560, 206);
             wvRssLink.Name = "wvRssLink";
-            wvRssLink.Size = new Size(483, 550);
+            wvRssLink.Size = new Size(483, 510);
             wvRssLink.TabIndex = 3;
             wvRssLink.ZoomFactor = 1D;
             wvRssLink.ContentLoading += wvRssLink_ContentLoading;
@@ -76,22 +77,22 @@
             // btBack
             // 
             btBack.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btBack.Location = new Point(975, 111);
+            btBack.Location = new Point(560, 166);
             btBack.Name = "btBack";
-            btBack.Size = new Size(68, 33);
+            btBack.Size = new Size(38, 33);
             btBack.TabIndex = 1;
-            btBack.Text = "戻る";
+            btBack.Text = "←";
             btBack.UseVisualStyleBackColor = true;
             btBack.Click += btBack_Click;
             // 
             // btForward
             // 
             btForward.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btForward.Location = new Point(901, 111);
+            btForward.Location = new Point(604, 166);
             btForward.Name = "btForward";
-            btForward.Size = new Size(68, 33);
+            btForward.Size = new Size(37, 33);
             btForward.TabIndex = 1;
-            btForward.Text = "進む";
+            btForward.Text = "→";
             btForward.UseVisualStyleBackColor = true;
             btForward.Click += btForward_Click;
             // 
@@ -145,6 +146,17 @@
             btFavoriteAdd.UseVisualStyleBackColor = true;
             btFavoriteAdd.Click += btFavoriteAdd_Click;
             // 
+            // btReload
+            // 
+            btReload.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btReload.Location = new Point(647, 166);
+            btReload.Name = "btReload";
+            btReload.Size = new Size(37, 33);
+            btReload.TabIndex = 1;
+            btReload.Text = "↻";
+            btReload.UseVisualStyleBackColor = true;
+            btReload.Click += btReload_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -155,6 +167,7 @@
             Controls.Add(label1);
             Controls.Add(wvRssLink);
             Controls.Add(lbTitles);
+            Controls.Add(btReload);
             Controls.Add(btForward);
             Controls.Add(btBack);
             Controls.Add(btFavoriteAdd);
@@ -178,5 +191,6 @@
         private Label label2;
         private ComboBox cbUrl;
         private Button btFavoriteAdd;
+        private Button btReload;
     }
 }

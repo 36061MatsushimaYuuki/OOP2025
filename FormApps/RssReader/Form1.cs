@@ -66,18 +66,14 @@ namespace RssReader {
 
         //進む 戻るボタンの有効化判定処理
         private void checkBackForward() {
-            btBack.Enabled = true;
-            btForward.Enabled = true;
-            if (!wvRssLink.CanGoBack)
-                btBack.Enabled = false;
-            if (!wvRssLink.CanGoForward)
-                btForward.Enabled = false;
+            btBack.Enabled = wvRssLink.CanGoBack;
+            btForward.Enabled = wvRssLink.CanGoForward;
         }
 
         private void btFavoriteAdd_Click(object sender, EventArgs e) {
             if (!string.IsNullOrWhiteSpace(cbUrl.Text) && !string.IsNullOrWhiteSpace(tbFavorite.Text)) {
                 int cnt;
-                for(cnt = 0; cnt < cbUrl.Items.Count; cnt++) {
+                for (cnt = 0; cnt < cbUrl.Items.Count; cnt++) {
                     if (cbUrl.Items[cnt].ToString() == tbFavorite.Text) {
                         break;
                     }
@@ -99,6 +95,16 @@ namespace RssReader {
 
         private void wvRssLink_ContentLoading(object sender, Microsoft.Web.WebView2.Core.CoreWebView2ContentLoadingEventArgs e) {
             checkBackForward();
+        }
+
+        //サイトを再読み込み
+        private void btReload_Click(object sender, EventArgs e) {
+            try {
+                wvRssLink.Reload();
+            }
+            catch (Exception ex) {
+
+            }
         }
     }
 }
