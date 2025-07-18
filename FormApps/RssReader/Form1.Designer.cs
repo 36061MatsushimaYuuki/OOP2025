@@ -30,6 +30,7 @@
             // 
             // tbUrl
             // 
+            tbUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tbUrl.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             tbUrl.Location = new Point(25, 20);
             tbUrl.Name = "tbUrl";

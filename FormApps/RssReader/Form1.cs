@@ -10,18 +10,26 @@ namespace RssReader {
             InitializeComponent();
         }
 
-        private void btRssGet_Click(object sender, EventArgs e) {
-            using (var wc = new WebClient()) {
-                var url = wc.OpenRead(tbUrl.Text);
-                XDocument xdoc = XDocument.Load(url);   //RSSの取得
+        private async void btRssGet_Click(object sender, EventArgs e) {
+            using (var hc = new HttpClient()) {
+                try {
+                    var responce = await hc.GetAsync(tbUrl.Text);
+                    var url = await responce.Content.ReadAsStreamAsync();
+                    XDocument xdoc = XDocument.Load(url);   //RSSの取得
 
-                //RSSを解析して必要な要素を取得
-                items = xdoc.Root.Descendants("item")
-                    .Select(x => new ItemData { Title = (string)x.Element("title")}).ToList();
+                    //RSSを解析して必要な要素を取得
+                    items = xdoc.Root.Descendants("item")
+                        .Select(x => new ItemData {
+                            Title = (string)x.Element("title"),
+                            Link = (string)x.Element("link")
+                        }).ToList();
 
-                lbTitles.Items.Clear();
-                foreach (var item in items) {
-                    lbTitles.Items.Add(item.Title);
+                    //リストボックスへタイトルを表示
+                    lbTitles.Items.Clear();
+                    items.ForEach(item => lbTitles.Items.Add(item.Title));
+                }
+                catch (Exception ex) {
+                    MessageBox.Show($"RSS取得中にエラーが発生しました: {ex.Message}", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
