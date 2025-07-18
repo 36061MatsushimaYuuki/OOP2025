@@ -38,7 +38,6 @@
             // 
             // btRssGet
             // 
-            btRssGet.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btRssGet.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             btRssGet.Location = new Point(943, 37);
             btRssGet.Name = "btRssGet";
@@ -98,7 +97,6 @@
             // 
             // tbFavorite
             // 
-            tbFavorite.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tbFavorite.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             tbFavorite.Location = new Point(212, 112);
             tbFavorite.Name = "tbFavorite";
@@ -138,7 +136,6 @@
             // 
             // btFavoriteAdd
             // 
-            btFavoriteAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btFavoriteAdd.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             btFavoriteAdd.Location = new Point(780, 112);
             btFavoriteAdd.Name = "btFavoriteAdd";
