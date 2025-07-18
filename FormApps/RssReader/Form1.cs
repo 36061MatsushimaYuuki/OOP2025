@@ -9,6 +9,7 @@ namespace RssReader {
 
         public Form1() {
             InitializeComponent();
+            checkBackForward();
         }
 
         private async void btRssGet_Click(object sender, EventArgs e) {
