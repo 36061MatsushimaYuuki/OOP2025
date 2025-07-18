@@ -43,7 +43,7 @@ namespace RssReader {
         //タイトルを選択（クリック）したときに呼ばれるイベントハンドラ
         private void lbTitles_Click(object sender, EventArgs e) {
             var selectedIndex = lbTitles.SelectedIndex;
-            if (items is not null && selectedIndex > -1) {
+            if (items is not null && items[selectedIndex] is not null) {
                 try {
                     wvRssLink.Source = new Uri(items[selectedIndex].Link);
                 }
@@ -86,6 +86,8 @@ namespace RssReader {
                         DisplayName = tbFavorite.Text,
                         Value = cbUrl.Text
                     });
+                    cbUrl.Text = "";
+                    tbFavorite.Text = "";
                 } else {
                     MessageBox.Show("同じお気に入り名称が既に存在します", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
