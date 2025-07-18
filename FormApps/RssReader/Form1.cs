@@ -14,7 +14,7 @@ namespace RssReader {
         private async void btRssGet_Click(object sender, EventArgs e) {
             using (var hc = new HttpClient()) {
                 try {
-                    var url = cbUrl.SelectedIndex >= 0 ? ((FavoriteItem)cbUrl.SelectedItem).Value : cbUrl.Text;
+                    var url = cbUrl.SelectedIndex < 0 ? cbUrl.Text : ((FavoriteItem)cbUrl.SelectedItem).Value;
                     var responce = await hc.GetStreamAsync(url);
                     XDocument xdoc = XDocument.Load(responce);   //RSS�̎擾
 
