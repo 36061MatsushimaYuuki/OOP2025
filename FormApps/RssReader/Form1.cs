@@ -13,15 +13,19 @@ namespace RssReader {
         private async void btRssGet_Click(object sender, EventArgs e) {
             using (var hc = new HttpClient()) {
                 try {
-                    var responce = await hc.GetAsync(tbUrl.Text);
-                    var url = await responce.Content.ReadAsStreamAsync();
-                    XDocument xdoc = XDocument.Load(url);   //RSSの取得
+                    var responce = await hc.GetStreamAsync(tbUrl.Text);
+                    XDocument xdoc = XDocument.Load(responce);   //RSSの取得
+
+                    //XDocument xdoc2 = XDocument.Parse(await hc.GetStringAsync(tbUrl.Text)); 
+
+                    //var url = hc.OpenRead(tbUrl.Text);
+                    //XDocument xdoc = XDocument.Load(url);
 
                     //RSSを解析して必要な要素を取得
                     items = xdoc.Root.Descendants("item")
                         .Select(x => new ItemData {
                             Title = (string)x.Element("title"),
-                            Link = (string)x.Element("link")
+                            Link = (string)x.Element("link"),
                         }).ToList();
 
                     //リストボックスへタイトルを表示
