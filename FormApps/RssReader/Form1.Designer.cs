@@ -34,6 +34,7 @@
             cbUrl = new ComboBox();
             btFavoriteAdd = new Button();
             btReload = new Button();
+            btFavoriteDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
             // 
@@ -157,6 +158,17 @@
             btReload.UseVisualStyleBackColor = true;
             btReload.Click += btReload_Click;
             // 
+            // btFavoriteDelete
+            // 
+            btFavoriteDelete.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btFavoriteDelete.Location = new Point(886, 111);
+            btFavoriteDelete.Name = "btFavoriteDelete";
+            btFavoriteDelete.Size = new Size(100, 33);
+            btFavoriteDelete.TabIndex = 1;
+            btFavoriteDelete.Text = "削除";
+            btFavoriteDelete.UseVisualStyleBackColor = true;
+            btFavoriteDelete.Click += btFavoriteDelete_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -170,6 +182,7 @@
             Controls.Add(btReload);
             Controls.Add(btForward);
             Controls.Add(btBack);
+            Controls.Add(btFavoriteDelete);
             Controls.Add(btFavoriteAdd);
             Controls.Add(btRssGet);
             Controls.Add(tbFavorite);
@@ -192,5 +205,6 @@
         private ComboBox cbUrl;
         private Button btFavoriteAdd;
         private Button btReload;
+        private Button btFavoriteDelete;
     }
 }

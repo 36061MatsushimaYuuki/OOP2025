@@ -1,5 +1,6 @@
 using System.Net;
 using System.Security.Cryptography.Xml;
+using System.Security.Policy;
 using System.Xml.Linq;
 
 namespace RssReader {
@@ -10,6 +11,11 @@ namespace RssReader {
         public Form1() {
             InitializeComponent();
             checkBackForward();
+            btReload.Enabled = false;
+            addFavoriteItem("群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml");
+            addFavoriteItem("グルメ", "https://news.yahoo.co.jp/rss/media/impgrw/all.xml");
+            addFavoriteItem("クロワッサンオンライン", "https://news.yahoo.co.jp/rss/media/crssntv/all.xml");
+            addFavoriteItem("ITメディア", "https://news.yahoo.co.jp/rss/media/zdn_n/all.xml");
         }
 
         private async void btRssGet_Click(object sender, EventArgs e) {
@@ -66,6 +72,7 @@ namespace RssReader {
 
         //進む 戻るボタンの有効化判定処理
         private void checkBackForward() {
+            btReload.Enabled = true;
             btBack.Enabled = wvRssLink.CanGoBack;
             btForward.Enabled = wvRssLink.CanGoForward;
         }
@@ -79,10 +86,8 @@ namespace RssReader {
                     }
                 }
                 if (cnt == cbUrl.Items.Count) {
-                    cbUrl.Items.Add(new FavoriteItem {
-                        DisplayName = tbFavorite.Text,
-                        Value = cbUrl.Text
-                    });
+                    addFavoriteItem(tbFavorite.Text, cbUrl.Text);
+                    MessageBox.Show("お気に入り登録が完了しました", "RSSリーダー", MessageBoxButtons.OK);
                     cbUrl.Text = "";
                     tbFavorite.Text = "";
                 } else {
@@ -91,6 +96,13 @@ namespace RssReader {
             } else {
                 MessageBox.Show("URLまたはお気に入り名称が空です", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void addFavoriteItem(string name, string url) {
+            cbUrl.Items.Add(new FavoriteItem {
+                DisplayName = name,
+                Value = url
+            });
         }
 
         private void wvRssLink_ContentLoading(object sender, Microsoft.Web.WebView2.Core.CoreWebView2ContentLoadingEventArgs e) {
@@ -104,6 +116,15 @@ namespace RssReader {
             }
             catch (Exception ex) {
 
+            }
+        }
+
+        private void btFavoriteDelete_Click(object sender, EventArgs e) {
+            var selectedIndex = cbUrl.SelectedIndex;
+            if (selectedIndex > -1) {
+                if(MessageBox.Show("選択したお気に入り名称を本当に削除しますか？", "RSSリーダー", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                    cbUrl.Items.RemoveAt(selectedIndex);
+                }
             }
         }
     }
