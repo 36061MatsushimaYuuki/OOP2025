@@ -10,6 +10,9 @@ namespace RssReader {
 
         public Form1() {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e) {
             checkBackForward();
             btReload.Enabled = false;
             addFavoriteItem("群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml");
@@ -123,7 +126,7 @@ namespace RssReader {
         private void btFavoriteDelete_Click(object sender, EventArgs e) {
             var selectedIndex = cbUrl.SelectedIndex;
             if (selectedIndex > -1) {
-                if(MessageBox.Show("選択したお気に入り名称を本当に削除しますか？", "RSSリーダー", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                if (MessageBox.Show("選択したお気に入り名称を本当に削除しますか？", "RSSリーダー", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                     cbUrl.Items.RemoveAt(selectedIndex);
                     cbUrl.Text = "";
                 }
