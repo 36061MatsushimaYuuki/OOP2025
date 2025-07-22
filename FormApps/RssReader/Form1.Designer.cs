@@ -55,10 +55,11 @@
             lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
             lbTitles.FormattingEnabled = true;
+            lbTitles.HorizontalScrollbar = true;
             lbTitles.ItemHeight = 21;
             lbTitles.Location = new Point(25, 166);
             lbTitles.Name = "lbTitles";
-            lbTitles.Size = new Size(467, 550);
+            lbTitles.Size = new Size(426, 550);
             lbTitles.TabIndex = 2;
             lbTitles.Click += lbTitles_Click;
             // 
@@ -69,9 +70,9 @@
             wvRssLink.BackColor = SystemColors.Control;
             wvRssLink.CreationProperties = null;
             wvRssLink.DefaultBackgroundColor = Color.WhiteSmoke;
-            wvRssLink.Location = new Point(511, 206);
+            wvRssLink.Location = new Point(473, 206);
             wvRssLink.Name = "wvRssLink";
-            wvRssLink.Size = new Size(532, 510);
+            wvRssLink.Size = new Size(570, 510);
             wvRssLink.TabIndex = 3;
             wvRssLink.ZoomFactor = 1D;
             wvRssLink.ContentLoading += wvRssLink_ContentLoading;
@@ -79,7 +80,7 @@
             // btBack
             // 
             btBack.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btBack.Location = new Point(511, 165);
+            btBack.Location = new Point(473, 166);
             btBack.Name = "btBack";
             btBack.Size = new Size(38, 33);
             btBack.TabIndex = 1;
@@ -90,7 +91,7 @@
             // btForward
             // 
             btForward.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btForward.Location = new Point(555, 165);
+            btForward.Location = new Point(517, 164);
             btForward.Name = "btForward";
             btForward.Size = new Size(37, 33);
             btForward.TabIndex = 1;
@@ -151,7 +152,7 @@
             // btReload
             // 
             btReload.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btReload.Location = new Point(598, 165);
+            btReload.Location = new Point(560, 165);
             btReload.Name = "btReload";
             btReload.Size = new Size(37, 33);
             btReload.TabIndex = 1;
@@ -176,9 +177,9 @@
             tbSiteUrlText.Enabled = false;
             tbSiteUrlText.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             tbSiteUrlText.ImeMode = ImeMode.NoControl;
-            tbSiteUrlText.Location = new Point(641, 165);
+            tbSiteUrlText.Location = new Point(603, 165);
             tbSiteUrlText.Name = "tbSiteUrlText";
-            tbSiteUrlText.Size = new Size(402, 33);
+            tbSiteUrlText.Size = new Size(440, 33);
             tbSiteUrlText.TabIndex = 6;
             // 
             // Form1
