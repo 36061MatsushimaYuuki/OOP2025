@@ -107,6 +107,7 @@ namespace RssReader {
 
         private void wvRssLink_ContentLoading(object sender, Microsoft.Web.WebView2.Core.CoreWebView2ContentLoadingEventArgs e) {
             checkBackForward();
+            tbSiteUrlText.Text = wvRssLink.Source.AbsoluteUri;
         }
 
         //ƒTƒCƒg‚ğÄ“Ç‚İ‚İ
