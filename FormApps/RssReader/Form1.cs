@@ -124,6 +124,7 @@ namespace RssReader {
             if (selectedIndex > -1) {
                 if(MessageBox.Show("選択したお気に入り名称を本当に削除しますか？", "RSSリーダー", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                     cbUrl.Items.RemoveAt(selectedIndex);
+                    cbUrl.Text = "";
                 }
             }
         }
