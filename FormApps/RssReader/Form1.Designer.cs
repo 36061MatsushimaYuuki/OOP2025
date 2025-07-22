@@ -59,7 +59,7 @@
             lbTitles.ItemHeight = 21;
             lbTitles.Location = new Point(25, 166);
             lbTitles.Name = "lbTitles";
-            lbTitles.Size = new Size(426, 550);
+            lbTitles.Size = new Size(425, 550);
             lbTitles.TabIndex = 2;
             lbTitles.Click += lbTitles_Click;
             // 
