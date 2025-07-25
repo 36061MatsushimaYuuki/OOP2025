@@ -11,8 +11,9 @@ namespace RssReader {
         public Form1() {
             InitializeComponent();
         }
-
+ 
         private void Form1_Load(object sender, EventArgs e) {
+            ActiveControl = cbUrl;
             checkBackForward();
             btReload.Enabled = false;
             addFavoriteItem("ŒQ”nƒeƒŒƒr", "https://news.yahoo.co.jp/rss/media/gtv/all.xml");
