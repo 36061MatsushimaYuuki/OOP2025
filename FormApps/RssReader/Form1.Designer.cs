@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             btRssGet = new Button();
-            lbTitles = new ListBox();
             wvRssLink = new Microsoft.Web.WebView2.WinForms.WebView2();
             btBack = new Button();
             btForward = new Button();
@@ -39,7 +38,9 @@
             panel1 = new Panel();
             btSearch = new Button();
             tbSearch = new TextBox();
+            lbTitles = new ListBox();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btRssGet
@@ -53,27 +54,14 @@
             btRssGet.UseVisualStyleBackColor = true;
             btRssGet.Click += btRssGet_Click;
             // 
-            // lbTitles
-            // 
-            lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            lbTitles.DrawMode = DrawMode.OwnerDrawFixed;
-            lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            lbTitles.FormattingEnabled = true;
-            lbTitles.HorizontalScrollbar = true;
-            lbTitles.ItemHeight = 21;
-            lbTitles.Location = new Point(29, 187);
-            lbTitles.Name = "lbTitles";
-            lbTitles.Size = new Size(425, 529);
-            lbTitles.TabIndex = 2;
-            lbTitles.Click += lbTitles_Click;
-            // 
             // wvRssLink
             // 
             wvRssLink.AllowExternalDrop = true;
+            wvRssLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             wvRssLink.BackColor = Color.WhiteSmoke;
             wvRssLink.CreationProperties = null;
             wvRssLink.DefaultBackgroundColor = SystemColors.ControlLight;
-            wvRssLink.Location = new Point(473, 187);
+            wvRssLink.Location = new Point(0, 0);
             wvRssLink.Name = "wvRssLink";
             wvRssLink.Size = new Size(570, 529);
             wvRssLink.TabIndex = 3;
@@ -187,7 +175,9 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.White;
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.Controls.Add(wvRssLink);
             panel1.Location = new Point(473, 187);
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 529);
@@ -196,7 +186,7 @@
             // btSearch
             // 
             btSearch.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btSearch.Location = new Point(415, 127);
+            btSearch.Location = new Point(418, 127);
             btSearch.Name = "btSearch";
             btSearch.Size = new Size(36, 33);
             btSearch.TabIndex = 1;
@@ -211,6 +201,22 @@
             tbSearch.Name = "tbSearch";
             tbSearch.Size = new Size(380, 33);
             tbSearch.TabIndex = 0;
+            tbSearch.TextChanged += tbSearch_TextChanged;
+            // 
+            // lbTitles
+            // 
+            lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            lbTitles.DrawMode = DrawMode.OwnerDrawFixed;
+            lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            lbTitles.FormattingEnabled = true;
+            lbTitles.HorizontalExtent = 529;
+            lbTitles.HorizontalScrollbar = true;
+            lbTitles.ItemHeight = 21;
+            lbTitles.Location = new Point(29, 187);
+            lbTitles.Name = "lbTitles";
+            lbTitles.Size = new Size(425, 529);
+            lbTitles.TabIndex = 2;
+            lbTitles.Click += lbTitles_Click;
             // 
             // Form1
             // 
@@ -218,12 +224,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(188, 248, 230);
             ClientSize = new Size(1072, 742);
+            Controls.Add(lbTitles);
             Controls.Add(tbSiteUrlText);
             Controls.Add(cbUrl);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(wvRssLink);
-            Controls.Add(lbTitles);
             Controls.Add(btReload);
             Controls.Add(btForward);
             Controls.Add(btBack);
@@ -236,15 +241,16 @@
             Controls.Add(panel1);
             Name = "Form1";
             Text = "RSSリーダー";
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)wvRssLink).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private Button btRssGet;
-        private ListBox lbTitles;
         private Microsoft.Web.WebView2.WinForms.WebView2 wvRssLink;
         private Button btBack;
         private Button btForward;
@@ -259,5 +265,6 @@
         private Panel panel1;
         private Button btSearch;
         private TextBox tbSearch;
+        private ListBox lbTitles;
     }
 }

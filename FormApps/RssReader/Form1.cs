@@ -1,7 +1,10 @@
 using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Security.Policy;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -15,17 +18,31 @@ namespace RssReader {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+
             lbTitles.DrawItem += lbTitles_DrawItem;
 
             ActiveControl = cbUrl;
             checkBackForward();
             btReload.Enabled = false;
-            addFavoriteItem("★群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml", false);
-            addFavoriteItem("★グルメ", "https://news.yahoo.co.jp/rss/media/impgrw/all.xml", false);
-            addFavoriteItem("★クロワッサンオンライン", "https://news.yahoo.co.jp/rss/media/crssntv/all.xml", false);
-            addFavoriteItem("★ITメディア", "https://news.yahoo.co.jp/rss/media/zdn_n/all.xml");
-            addFavoriteItem("★科学", "https://news.yahoo.co.jp/rss/topics/science.xml", false);
-            addFavoriteItem("★経済", "https://news.yahoo.co.jp/rss/topics/business.xml", false);
+            if (!File.Exists("FavoriteList.json")) {
+                addFavoriteItem("★群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml", false);
+                addFavoriteItem("★グルメ", "https://news.yahoo.co.jp/rss/media/impgrw/all.xml", false);
+                addFavoriteItem("★クロワッサンオンライン", "https://news.yahoo.co.jp/rss/media/crssntv/all.xml", false);
+                addFavoriteItem("★ITメディア", "https://news.yahoo.co.jp/rss/media/zdn_n/all.xml");
+                addFavoriteItem("★科学", "https://news.yahoo.co.jp/rss/topics/science.xml", false);
+                addFavoriteItem("★経済", "https://news.yahoo.co.jp/rss/topics/business.xml", false);
+            } else {
+                try {
+                    var jsonString = File.ReadAllText("FavoriteList.json");
+                    var items = JsonSerializer.Deserialize<FavoriteItem[]>(jsonString);
+                    foreach (var item in items) {
+                        addFavoriteItem(item.DisplayName, item.Value, item.CanDelete);
+                    }
+                }
+                catch (Exception ex) {
+                    MessageBox.Show($"お気に入り名称リストの読み込みに失敗しました: {ex.Message}", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private async void btRssGet_Click(object sender, EventArgs e) {
@@ -60,13 +77,13 @@ namespace RssReader {
         //タイトルを選択（クリック）したときに呼ばれるイベントハンドラ
         private void lbTitles_Click(object sender, EventArgs e) {
             var selectedIndex = lbTitles.SelectedIndex;
-            if (items is not null && lbTitles.Items.Count > 0 && items[selectedIndex] is not null) {
+            if (items is not null && items[selectedIndex] is not null) {
                 try {
                     var index = items.FindIndex(i => i.Title == lbTitles.Text);
                     wvRssLink.Source = new Uri(items[index].Link);
                 }
                 catch (Exception ex) {
-                    MessageBox.Show($"URL情報取得中にエラーが発生しました: {ex.Message}", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
             }
         }
@@ -90,7 +107,7 @@ namespace RssReader {
 
         private void btFavoriteAdd_Click(object sender, EventArgs e) {
             if (!string.IsNullOrWhiteSpace(cbUrl.Text) && !string.IsNullOrWhiteSpace(tbFavorite.Text)) {
-                if(!Uri.IsWellFormedUriString(cbUrl.Text, UriKind.Absolute)) {
+                if (!Uri.IsWellFormedUriString(cbUrl.Text, UriKind.Absolute)) {
                     MessageBox.Show("入力されたURLが正しくありません", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -153,6 +170,14 @@ namespace RssReader {
         private void lbTitles_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index < 0) return;
 
+            int maxWidth = 0;
+            foreach (object item in lbTitles.SelectedItems) {
+                int itemWidth = TextRenderer.MeasureText(item.ToString(), lbTitles.Font, lbTitles.Size).Width;
+                if (itemWidth > maxWidth) {
+                    maxWidth = itemWidth;
+                }
+            }
+
             // 奇数行と偶数行で異なる背景色を設定
             Color backColor = (e.State & DrawItemState.Selected) == DrawItemState.Selected ? SystemColors.Highlight :
                               (e.Index % 2 == 0) ? Color.White : Color.WhiteSmoke;
@@ -170,6 +195,10 @@ namespace RssReader {
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
                 e.DrawFocusRectangle();
             }
+
+            if (maxWidth > lbTitles.HorizontalExtent) {
+                lbTitles.HorizontalExtent = maxWidth;
+            }
         }
 
         private void btSearch_Click(object sender, EventArgs e) {
@@ -180,13 +209,34 @@ namespace RssReader {
             }
             var indexlist = new List<int>();
             int index = items.FindIndex(i => Regex.IsMatch(i.Title, ".*" + tbSearch.Text + ".*"));
-            while(index > -1) {
+            while (index > -1) {
                 indexlist.Add(index);
                 index++;
                 index = items.FindIndex(index, i => Regex.IsMatch(i.Title, ".*" + tbSearch.Text + ".*"));
             }
-            foreach(var selected in indexlist) {
+            foreach (var selected in indexlist) {
                 lbTitles.Items.Add(items[selected].Title);
+            }
+        }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e) {
+            if (string.IsNullOrWhiteSpace(tbSearch.Text)) {
+                lbTitles.Items.Clear();
+                items.ForEach(item => lbTitles.Items.Add(item.Title ?? "不明なデータ"));
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            var options = new JsonSerializerOptions {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                WriteIndented = true,
+            };
+            string jsonString = JsonSerializer.Serialize(cbUrl.Items, options);
+            try {
+                File.WriteAllText("FavoriteList.json", jsonString);
+            }
+            catch (Exception ex) {
+
             }
         }
     }
