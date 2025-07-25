@@ -36,13 +36,16 @@
             btReload = new Button();
             btFavoriteDelete = new Button();
             tbSiteUrlText = new TextBox();
+            panel1 = new Panel();
+            btSearch = new Button();
+            tbSearch = new TextBox();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
             // 
             // btRssGet
             // 
             btRssGet.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btRssGet.Location = new Point(943, 37);
+            btRssGet.Location = new Point(943, 20);
             btRssGet.Name = "btRssGet";
             btRssGet.Size = new Size(100, 33);
             btRssGet.TabIndex = 1;
@@ -53,26 +56,26 @@
             // lbTitles
             // 
             lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            lbTitles.DrawMode = DrawMode.OwnerDrawFixed;
             lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
             lbTitles.FormattingEnabled = true;
             lbTitles.HorizontalScrollbar = true;
             lbTitles.ItemHeight = 21;
-            lbTitles.Location = new Point(25, 166);
+            lbTitles.Location = new Point(29, 187);
             lbTitles.Name = "lbTitles";
-            lbTitles.Size = new Size(425, 550);
+            lbTitles.Size = new Size(425, 529);
             lbTitles.TabIndex = 2;
             lbTitles.Click += lbTitles_Click;
             // 
             // wvRssLink
             // 
             wvRssLink.AllowExternalDrop = true;
-            wvRssLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            wvRssLink.BackColor = SystemColors.Control;
+            wvRssLink.BackColor = Color.WhiteSmoke;
             wvRssLink.CreationProperties = null;
-            wvRssLink.DefaultBackgroundColor = Color.WhiteSmoke;
-            wvRssLink.Location = new Point(473, 206);
+            wvRssLink.DefaultBackgroundColor = SystemColors.ControlLight;
+            wvRssLink.Location = new Point(473, 187);
             wvRssLink.Name = "wvRssLink";
-            wvRssLink.Size = new Size(570, 510);
+            wvRssLink.Size = new Size(570, 529);
             wvRssLink.TabIndex = 3;
             wvRssLink.ZoomFactor = 1D;
             wvRssLink.ContentLoading += wvRssLink_ContentLoading;
@@ -80,7 +83,7 @@
             // btBack
             // 
             btBack.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btBack.Location = new Point(473, 166);
+            btBack.Location = new Point(473, 128);
             btBack.Name = "btBack";
             btBack.Size = new Size(38, 33);
             btBack.TabIndex = 1;
@@ -91,7 +94,7 @@
             // btForward
             // 
             btForward.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btForward.Location = new Point(517, 164);
+            btForward.Location = new Point(517, 128);
             btForward.Name = "btForward";
             btForward.Size = new Size(37, 33);
             btForward.TabIndex = 1;
@@ -102,27 +105,27 @@
             // tbFavorite
             // 
             tbFavorite.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            tbFavorite.Location = new Point(212, 112);
+            tbFavorite.Location = new Point(148, 71);
             tbFavorite.Name = "tbFavorite";
-            tbFavorite.Size = new Size(553, 33);
+            tbFavorite.Size = new Size(449, 33);
             tbFavorite.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            label1.Location = new Point(25, 44);
+            label1.Location = new Point(25, 27);
             label1.Name = "label1";
-            label1.Size = new Size(181, 21);
+            label1.Size = new Size(152, 21);
             label1.TabIndex = 4;
-            label1.Text = "URLまたはお気に入り名称:";
+            label1.Text = "URL(お気に入り名称):";
             label1.TextAlign = ContentAlignment.TopRight;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            label2.Location = new Point(93, 118);
+            label2.Location = new Point(29, 77);
             label2.Name = "label2";
             label2.Size = new Size(113, 21);
             label2.TabIndex = 4;
@@ -133,17 +136,17 @@
             // 
             cbUrl.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             cbUrl.FormattingEnabled = true;
-            cbUrl.Location = new Point(212, 38);
+            cbUrl.Location = new Point(183, 21);
             cbUrl.Name = "cbUrl";
-            cbUrl.Size = new Size(711, 33);
+            cbUrl.Size = new Size(740, 33);
             cbUrl.TabIndex = 5;
             // 
             // btFavoriteAdd
             // 
             btFavoriteAdd.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btFavoriteAdd.Location = new Point(780, 112);
+            btFavoriteAdd.Location = new Point(603, 71);
             btFavoriteAdd.Name = "btFavoriteAdd";
-            btFavoriteAdd.Size = new Size(100, 33);
+            btFavoriteAdd.Size = new Size(62, 33);
             btFavoriteAdd.TabIndex = 1;
             btFavoriteAdd.Text = "登録";
             btFavoriteAdd.UseVisualStyleBackColor = true;
@@ -152,7 +155,7 @@
             // btReload
             // 
             btReload.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btReload.Location = new Point(560, 165);
+            btReload.Location = new Point(560, 128);
             btReload.Name = "btReload";
             btReload.Size = new Size(37, 33);
             btReload.TabIndex = 1;
@@ -163,9 +166,9 @@
             // btFavoriteDelete
             // 
             btFavoriteDelete.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btFavoriteDelete.Location = new Point(886, 111);
+            btFavoriteDelete.Location = new Point(671, 70);
             btFavoriteDelete.Name = "btFavoriteDelete";
-            btFavoriteDelete.Size = new Size(100, 33);
+            btFavoriteDelete.Size = new Size(59, 33);
             btFavoriteDelete.TabIndex = 1;
             btFavoriteDelete.Text = "削除";
             btFavoriteDelete.UseVisualStyleBackColor = true;
@@ -177,15 +180,43 @@
             tbSiteUrlText.Enabled = false;
             tbSiteUrlText.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             tbSiteUrlText.ImeMode = ImeMode.NoControl;
-            tbSiteUrlText.Location = new Point(603, 165);
+            tbSiteUrlText.Location = new Point(603, 128);
             tbSiteUrlText.Name = "tbSiteUrlText";
             tbSiteUrlText.Size = new Size(440, 33);
             tbSiteUrlText.TabIndex = 6;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.Location = new Point(473, 187);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(570, 529);
+            panel1.TabIndex = 8;
+            // 
+            // btSearch
+            // 
+            btSearch.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btSearch.Location = new Point(415, 127);
+            btSearch.Name = "btSearch";
+            btSearch.Size = new Size(36, 33);
+            btSearch.TabIndex = 1;
+            btSearch.Text = "🔎";
+            btSearch.UseVisualStyleBackColor = true;
+            btSearch.Click += btSearch_Click;
+            // 
+            // tbSearch
+            // 
+            tbSearch.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            tbSearch.Location = new Point(29, 127);
+            tbSearch.Name = "tbSearch";
+            tbSearch.Size = new Size(380, 33);
+            tbSearch.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(188, 248, 230);
             ClientSize = new Size(1072, 742);
             Controls.Add(tbSiteUrlText);
             Controls.Add(cbUrl);
@@ -197,9 +228,12 @@
             Controls.Add(btForward);
             Controls.Add(btBack);
             Controls.Add(btFavoriteDelete);
+            Controls.Add(btSearch);
             Controls.Add(btFavoriteAdd);
             Controls.Add(btRssGet);
+            Controls.Add(tbSearch);
             Controls.Add(tbFavorite);
+            Controls.Add(panel1);
             Name = "Form1";
             Text = "RSSリーダー";
             Load += Form1_Load;
@@ -222,5 +256,8 @@
         private Button btReload;
         private Button btFavoriteDelete;
         private TextBox tbSiteUrlText;
+        private Panel panel1;
+        private Button btSearch;
+        private TextBox tbSearch;
     }
 }

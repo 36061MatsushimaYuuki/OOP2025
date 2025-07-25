@@ -1,6 +1,8 @@
 using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Security.Policy;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace RssReader {
@@ -11,8 +13,10 @@ namespace RssReader {
         public Form1() {
             InitializeComponent();
         }
- 
+
         private void Form1_Load(object sender, EventArgs e) {
+            lbTitles.DrawItem += lbTitles_DrawItem;
+
             ActiveControl = cbUrl;
             checkBackForward();
             btReload.Enabled = false;
@@ -56,9 +60,10 @@ namespace RssReader {
         //タイトルを選択（クリック）したときに呼ばれるイベントハンドラ
         private void lbTitles_Click(object sender, EventArgs e) {
             var selectedIndex = lbTitles.SelectedIndex;
-            if (items is not null && items[selectedIndex] is not null) {
+            if (items is not null && lbTitles.Items.Count > 0 && items[selectedIndex] is not null) {
                 try {
-                    wvRssLink.Source = new Uri(items[selectedIndex].Link);
+                    var index = items.FindIndex(i => i.Title == lbTitles.Text);
+                    wvRssLink.Source = new Uri(items[index].Link);
                 }
                 catch (Exception ex) {
                     MessageBox.Show($"URL情報取得中にエラーが発生しました: {ex.Message}", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -85,6 +90,10 @@ namespace RssReader {
 
         private void btFavoriteAdd_Click(object sender, EventArgs e) {
             if (!string.IsNullOrWhiteSpace(cbUrl.Text) && !string.IsNullOrWhiteSpace(tbFavorite.Text)) {
+                if(!Uri.IsWellFormedUriString(cbUrl.Text, UriKind.Absolute)) {
+                    MessageBox.Show("入力されたURLが正しくありません", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 int cnt;
                 for (cnt = 0; cnt < cbUrl.Items.Count; cnt++) {
                     if (cbUrl.Items[cnt].ToString() == tbFavorite.Text) {
@@ -138,6 +147,46 @@ namespace RssReader {
                     }
                     MessageBox.Show("このお気に入り名称は削除することができません", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void lbTitles_DrawItem(object sender, DrawItemEventArgs e) {
+            if (e.Index < 0) return;
+
+            // 奇数行と偶数行で異なる背景色を設定
+            Color backColor = (e.State & DrawItemState.Selected) == DrawItemState.Selected ? SystemColors.Highlight :
+                              (e.Index % 2 == 0) ? Color.White : Color.WhiteSmoke;
+
+            using (SolidBrush brush = new SolidBrush(backColor)) {
+                e.Graphics.FillRectangle(brush, e.Bounds);
+            }
+
+            // テキストを描画
+            TextRenderer.DrawText(e.Graphics, lbTitles.Items[e.Index].ToString(),
+            lbTitles.Font, e.Bounds, lbTitles.ForeColor,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+
+            // 選択状態の描画
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) {
+                e.DrawFocusRectangle();
+            }
+        }
+
+        private void btSearch_Click(object sender, EventArgs e) {
+            lbTitles.Items.Clear();
+            if (string.IsNullOrWhiteSpace(tbSearch.Text)) {
+                items.ForEach(item => lbTitles.Items.Add(item.Title ?? "不明なデータ"));
+                return;
+            }
+            var indexlist = new List<int>();
+            int index = items.FindIndex(i => Regex.IsMatch(i.Title, ".*" + tbSearch.Text + ".*"));
+            while(index > -1) {
+                indexlist.Add(index);
+                index++;
+                index = items.FindIndex(index, i => Regex.IsMatch(i.Title, ".*" + tbSearch.Text + ".*"));
+            }
+            foreach(var selected in indexlist) {
+                lbTitles.Items.Add(items[selected].Title);
             }
         }
     }
