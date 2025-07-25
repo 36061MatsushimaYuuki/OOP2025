@@ -8,6 +8,7 @@ namespace RssReader {
     public class FavoriteItem {
         public required string DisplayName { get; set; }
         public required string Value { get; set; }
+        public required bool CanDelete { get; set; }
 
         public override string ToString() {
             return DisplayName;

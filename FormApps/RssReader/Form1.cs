@@ -16,10 +16,12 @@ namespace RssReader {
             ActiveControl = cbUrl;
             checkBackForward();
             btReload.Enabled = false;
-            addFavoriteItem("群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml");
-            addFavoriteItem("グルメ", "https://news.yahoo.co.jp/rss/media/impgrw/all.xml");
-            addFavoriteItem("クロワッサンオンライン", "https://news.yahoo.co.jp/rss/media/crssntv/all.xml");
-            addFavoriteItem("ITメディア", "https://news.yahoo.co.jp/rss/media/zdn_n/all.xml");
+            addFavoriteItem("★群馬テレビ", "https://news.yahoo.co.jp/rss/media/gtv/all.xml", false);
+            addFavoriteItem("★グルメ", "https://news.yahoo.co.jp/rss/media/impgrw/all.xml", false);
+            addFavoriteItem("★クロワッサンオンライン", "https://news.yahoo.co.jp/rss/media/crssntv/all.xml", false);
+            addFavoriteItem("★ITメディア", "https://news.yahoo.co.jp/rss/media/zdn_n/all.xml");
+            addFavoriteItem("★科学", "https://news.yahoo.co.jp/rss/topics/science.xml", false);
+            addFavoriteItem("★経済", "https://news.yahoo.co.jp/rss/topics/business.xml", false);
         }
 
         private async void btRssGet_Click(object sender, EventArgs e) {
@@ -102,10 +104,11 @@ namespace RssReader {
             }
         }
 
-        private void addFavoriteItem(string name, string url) {
+        private void addFavoriteItem(string name, string url, bool canDelete = true) {
             cbUrl.Items.Add(new FavoriteItem {
                 DisplayName = name,
-                Value = url
+                Value = url,
+                CanDelete = canDelete
             });
         }
 
@@ -128,8 +131,12 @@ namespace RssReader {
             var selectedIndex = cbUrl.SelectedIndex;
             if (selectedIndex > -1) {
                 if (MessageBox.Show("選択したお気に入り名称を本当に削除しますか？", "RSSリーダー", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-                    cbUrl.Items.RemoveAt(selectedIndex);
-                    cbUrl.Text = "";
+                    if (((FavoriteItem)cbUrl.SelectedItem).CanDelete) {
+                        cbUrl.Items.RemoveAt(selectedIndex);
+                        cbUrl.Text = "";
+                        return;
+                    }
+                    MessageBox.Show("このお気に入り名称は削除することができません", "RSSリーダー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
