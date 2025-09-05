@@ -24,5 +24,18 @@ namespace SampleApplication
         {
             InitializeComponent();
         }
+
+        private void checkBox_IsChecked(object sender, RoutedEventArgs e) {
+            checkBoxTextBlock.Text = (bool)((CheckBox)sender).IsChecked ?
+                "チェック済み" /* true */ : "未チェック" /* false */;
+        }
+
+        private void colorRadioButton_Checked(object sender, RoutedEventArgs e) {
+            colorTextBlock.Text = (string)((RadioButton)sender).Content;
+        }
+
+        private void seasonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            seasonTextBlock.Text = (string)((ComboBoxItem)(seasonComboBox.SelectedItem)).Content;
+        }
     }
 }
