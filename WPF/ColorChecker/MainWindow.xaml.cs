@@ -26,9 +26,16 @@ namespace ColorChecker {
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            var r = (byte)RedSlider.Value;
+            var g = (byte)GreenSlider.Value;
+            var b = (byte)BlueSlider.Value;
+            var thisColor = Color.FromRgb(r, g, b);
             colorArea.Background = new SolidColorBrush(
-                Color.FromRgb((byte)RedSlider.Value, (byte)GreenSlider.Value, (byte)BlueSlider.Value)
+                thisColor
             );
+            var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
+            var index = ColorSelect_ComboBox.Items.IndexOf(equalItem);
+            ColorSelect_ComboBox.SelectedIndex = index;
         }
 
         private void Stock_Button_Click(object sender, RoutedEventArgs e) {
@@ -70,6 +77,24 @@ namespace ColorChecker {
         }
 
         private void Stock_List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            //Stock_ToColorLabel_Button_Click に移動
+        }
+
+        private void Set_SliderValue(Color color) {
+            RedSlider.Value = color.R;
+            GreenSlider.Value = color.G;
+            BlueSlider.Value = color.B;
+        }
+
+        private void Stock_Delete_Button_Click(object sender, RoutedEventArgs e) {
+            if(Stock_List.SelectedItem == null) {
+                return;
+            }
+            var selectedItem = (MyColor)Stock_List.SelectedItem;
+            Stock_List.Items.Remove(selectedItem);
+        }
+
+        private void Stock_ToColorLabel_Button_Click(object sender, RoutedEventArgs e) {
             if (Stock_List.SelectedItem == null) {
                 return;
             }
@@ -78,14 +103,6 @@ namespace ColorChecker {
                 selectedItem.Color
             );
             Set_SliderValue(selectedItem.Color);
-            //セレクト状態をリセット
-            Stock_List.SelectedIndex = -1;
-        }
-
-        private void Set_SliderValue(Color color) {
-            RedSlider.Value = color.R;
-            GreenSlider.Value = color.G;
-            BlueSlider.Value = color.B;
         }
     }
 }
