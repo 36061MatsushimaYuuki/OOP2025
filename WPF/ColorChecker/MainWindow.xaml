@@ -52,8 +52,20 @@
             <TextBox Grid.Column="2" Grid.Row="2" FontSize="14" VerticalAlignment="Center"
                 Text="{Binding ElementName=BlueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="3" Margin="20" VerticalAlignment="Center">
-                
+            <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="3" Margin="20" VerticalAlignment="Center"
+                       ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="20" Height="Auto" Margin="5,0" BorderThickness="1" BorderBrush="Black"  >
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Color}"/>
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
 
@@ -63,9 +75,11 @@
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="Stock_Button" Grid.Row="0" Content="Stock" Margin="15"/>
+            <Button x:Name="Stock_Button" Grid.Row="0" Content="Stock" Margin="15"
+                    Click="Stock_Button_Click"/>
 
-            <ListBox x:Name="Stock_List" Grid.Row="1" Margin="15"/>
+            <ListBox x:Name="Stock_List" Grid.Row="1" Margin="15" FontSize="14"
+                     SelectionChanged="Stock_List_SelectionChanged"/>
         </Grid>
     </Grid>
 </Window>
