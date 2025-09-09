@@ -14,15 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ColorChecker
-{
+namespace ColorChecker {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
+    public partial class MainWindow : Window {
+        public MainWindow() {
             InitializeComponent();
 
             DataContext = GetColorList();
@@ -42,8 +39,13 @@ namespace ColorChecker
             //comboBoxが選択されていない状態でも調べる
             var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
             string colorName = null;
-            if(equalItem != null) {
+            if (equalItem != null) {
                 colorName = equalItem.Name;
+            }
+            var matched = Stock_List.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
+            if(matched != null) {
+                MessageBox.Show("既にこの色は登録されています", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             Stock_List.Items.Add(new MyColor {
                 Color = thisColor,
@@ -57,7 +59,7 @@ namespace ColorChecker
         }
 
         private void ColorSelect_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if(ColorSelect_ComboBox.SelectedItem == null) {
+            if (ColorSelect_ComboBox.SelectedItem == null) {
                 return;
             }
             var selectedItem = (MyColor)ColorSelect_ComboBox.SelectedItem;
@@ -68,7 +70,7 @@ namespace ColorChecker
         }
 
         private void Stock_List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if(Stock_List.SelectedItem == null) {
+            if (Stock_List.SelectedItem == null) {
                 return;
             }
             var selectedItem = (MyColor)Stock_List.SelectedItem;
