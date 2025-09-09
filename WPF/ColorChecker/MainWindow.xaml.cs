@@ -64,9 +64,7 @@ namespace ColorChecker
             colorArea.Background = new SolidColorBrush(
                 selectedItem.Color
             );
-            RedSlider.Value = selectedItem.Color.R;
-            GreenSlider.Value = selectedItem.Color.G;
-            BlueSlider.Value = selectedItem.Color.B;
+            Set_SliderValue(selectedItem.Color);
         }
 
         private void Stock_List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -77,11 +75,15 @@ namespace ColorChecker
             colorArea.Background = new SolidColorBrush(
                 selectedItem.Color
             );
-            RedSlider.Value = selectedItem.Color.R;
-            GreenSlider.Value = selectedItem.Color.G;
-            BlueSlider.Value = selectedItem.Color.B;
+            Set_SliderValue(selectedItem.Color);
             //セレクト状態をリセット
             Stock_List.SelectedIndex = -1;
+        }
+
+        private void Set_SliderValue(Color color) {
+            RedSlider.Value = color.R;
+            GreenSlider.Value = color.G;
+            BlueSlider.Value = color.B;
         }
     }
 }
