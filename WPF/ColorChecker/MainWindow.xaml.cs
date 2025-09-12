@@ -42,10 +42,8 @@ namespace ColorChecker {
             ColorSelect_ComboBox.SelectedIndex = index;
             ColorCode_TextBox.Text = String.Format("#{0:X2}{1:X2}{2:X2}", r, g, b);
             RGBCode_TextBox.Text = r + ", " + g + ", " + b;
-            if(!isLightMode) {
-                LightSlider.Value = Math.Max(Math.Max(r, g), b);
-                _saveLightValue = LightSlider.Value;
-                _saveColor = thisColor;
+            if(!isLightMode || (!isLightMode && ColorSelect_ComboBox.SelectedIndex < 0)) {
+                SetLightAndSaveColor(thisColor);
             }
         }
 
@@ -57,13 +55,22 @@ namespace ColorChecker {
             if(!isLightMode || _saveLightValue <= 0) {
                 return;
             }
-            RedSlider.Value = Math.Floor(_saveColor.R * (LightSlider.Value / _saveLightValue));
-            GreenSlider.Value = Math.Floor(_saveColor.G * (LightSlider.Value / _saveLightValue));
-            BlueSlider.Value = Math.Floor(_saveColor.B * (LightSlider.Value / _saveLightValue));
+            RedSlider.Value = Math.Round(_saveColor.R * (LightSlider.Value / _saveLightValue));
+            GreenSlider.Value = Math.Round(_saveColor.G * (LightSlider.Value / _saveLightValue));
+            BlueSlider.Value = Math.Round(_saveColor.B * (LightSlider.Value / _saveLightValue));
         }
 
         private void LightSlider_GotFocus(object sender, RoutedEventArgs e) {
             isLightMode = true;
+        }
+
+        private void SetLightAndSaveColor(Color color) {
+            var r = color.R;
+            var g = color.G;
+            var b = color.B;
+            _saveColor = color;
+            LightSlider.Value = Math.Max(Math.Max(r, g), b);
+            _saveLightValue = LightSlider.Value;
         }
 
         private void Stock_Button_Click(object sender, RoutedEventArgs e) {
@@ -101,17 +108,29 @@ namespace ColorChecker {
             colorArea.Background = new SolidColorBrush(
                 selectedItem.Color
             );
-            Set_SliderValue(selectedItem.Color);
+            if (!isLightMode) {
+                Set_SliderValue(selectedItem.Color, true);
+            }
+        }
+
+        private void ColorSelect_ComboBox_GotFocus(object sender, RoutedEventArgs e) {
+            isLightMode = false;
         }
 
         private void Stock_List_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             //Stock_ToColorLabel_Button_Click に移動
         }
 
-        private void Set_SliderValue(Color color) {
-            RedSlider.Value = color.R;
-            GreenSlider.Value = color.G;
-            BlueSlider.Value = color.B;
+        private void Set_SliderValue(Color color, bool isSetLight) {
+            var r = color.R;
+            var g = color.G;
+            var b = color.B;
+            RedSlider.Value = r;
+            GreenSlider.Value = g;
+            BlueSlider.Value = b;
+            if(isSetLight) {
+                SetLightAndSaveColor(color);
+            }
         }
 
         private void Stock_Delete_Button_Click(object sender, RoutedEventArgs e) {
@@ -130,7 +149,8 @@ namespace ColorChecker {
             colorArea.Background = new SolidColorBrush(
                 selectedItem.Color
             );
-            Set_SliderValue(selectedItem.Color);
+            isLightMode = false;
+            Set_SliderValue(selectedItem.Color, false);
         }
 
         /* Stockの位置移動機能を実装 */

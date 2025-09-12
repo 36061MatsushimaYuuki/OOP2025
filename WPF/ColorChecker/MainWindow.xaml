@@ -84,7 +84,8 @@
                 Text="{Binding ElementName=LightSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
 
             <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="4" Margin="15" VerticalAlignment="Center"
-                       ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged">
+                      ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged"
+                      GotFocus="ColorSelect_ComboBox_GotFocus">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
