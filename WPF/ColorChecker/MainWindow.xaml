@@ -5,130 +5,94 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorChecker"
         mc:Ignorable="d"
-        Title="ColorChecker" Height="300" Width="720" MinHeight="300" MinWidth="720" Loaded="Window_Loaded">
+        Title="ColorChecker" Height="340" Width="720" MinHeight="340" MinWidth="720" Loaded="Window_Loaded">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.6*"/>
-            <ColumnDefinition Width="2.8*"/>
-            <ColumnDefinition Width="3.2*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.6*"/>
+                <ColumnDefinition Width="2.8*"/>
+                <ColumnDefinition Width="3.2*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Label x:Name="colorArea" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="Black" Margin="10"/>
+                <Label x:Name="colorArea" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="Black" Margin="10"/>
 
-            <Grid Grid.Row="1">
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="RGBCode_TextBox" Grid.Column="0" Text="0, 0, 0" Margin="10,0,10,10" 
+                        FontSize="14" VerticalAlignment="Center" IsReadOnly="True"/>
+
+                    <TextBox x:Name="ColorCode_TextBox" Grid.Column="1" Text="#000000" Margin="10,0,10,10" 
+                        FontSize="14" VerticalAlignment="Center" IsReadOnly="True"/>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <TextBox x:Name="RGBCode_TextBox" Grid.Column="0" Text="0, 0, 0" Margin="10,0,10,10" 
-                     FontSize="14" VerticalAlignment="Center" IsReadOnly="True"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <TextBox x:Name="ColorCode_TextBox" Grid.Column="1" Text="#000000" Margin="10,0,10,10" 
-                     FontSize="14" VerticalAlignment="Center" IsReadOnly="True"/>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <TextBlock Text="R" Grid.Column="0" Grid.Row="0" FontSize="20"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Slider x:Name="RedSlider" Grid.Column="1" Grid.Row="0"
+                <TextBlock Text="R" Grid.Column="0" Grid.Row="0" FontSize="20"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Slider x:Name="RedSlider" Grid.Column="1" Grid.Row="0"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
                     ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
-            <TextBox Grid.Column="2" Grid.Row="0" FontSize="14" VerticalAlignment="Center"
-                Text="{Binding ElementName=RedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="2" Grid.Row="0" FontSize="14" VerticalAlignment="Center"
+                    Text="{Binding Value, ElementName=RedSlider, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Text="G" Grid.Column="0" Grid.Row="1" FontSize="20"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Slider x:Name="GreenSlider" Grid.Column="1" Grid.Row="1"
+                <TextBlock Text="G" Grid.Column="0" Grid.Row="1" FontSize="20"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Slider x:Name="GreenSlider" Grid.Column="1" Grid.Row="1"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
                     ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
-            <TextBox Grid.Column="2" Grid.Row="1" FontSize="14" VerticalAlignment="Center"
-                Text="{Binding ElementName=GreenSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
-            
-            <TextBlock Text="B" Grid.Column="0" Grid.Row="2" FontSize="20"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Slider x:Name="BlueSlider" Grid.Column="1" Grid.Row="2"
+                <TextBox Grid.Column="2" Grid.Row="1" FontSize="14" VerticalAlignment="Center"
+                    Text="{Binding Value, ElementName=GreenSlider, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="B" Grid.Column="0" Grid.Row="2" FontSize="20"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Slider x:Name="BlueSlider" Grid.Column="1" Grid.Row="2"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
                     ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
-            <TextBox Grid.Column="2" Grid.Row="2" FontSize="14" VerticalAlignment="Center"
-                Text="{Binding ElementName=BlueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="2" Grid.Row="2" FontSize="14" VerticalAlignment="Center"
+                    Text="{Binding Value, ElementName=BlueSlider, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Row="3" Background="LightGray" Grid.ColumnSpan="3" Height="2" VerticalAlignment="Top"/>
+                <Label Grid.Row="3" Background="LightGray" Grid.ColumnSpan="3" Height="2" VerticalAlignment="Top"/>
 
-            <TextBlock Text="V" Grid.Column="0" Grid.Row="3" FontSize="20"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Slider x:Name="LightSlider" Grid.Column="1" Grid.Row="3"
+                <TextBlock Text="V" Grid.Column="0" Grid.Row="3" FontSize="20"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Slider x:Name="LightSlider" Grid.Column="1" Grid.Row="3"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
                     ValueChanged="LightSlider_ValueChanged" GotFocus="LightSlider_GotFocus"/>
-            <TextBox Grid.Column="2" Grid.Row="3" FontSize="14" VerticalAlignment="Center"
-                Text="{Binding ElementName=LightSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="2" Grid.Row="3" FontSize="14" VerticalAlignment="Center"
+                    Text="{Binding Value, ElementName=LightSlider, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="4" Margin="15" VerticalAlignment="Center"
-                      ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged"
-                      GotFocus="ColorSelect_ComboBox_GotFocus">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Width="20" Height="Auto" Margin="5,0" BorderThickness="1" BorderBrush="Black"  >
-                                <Border.Background>
-                                    <SolidColorBrush Color="{Binding Color}"/>
-                                </Border.Background>
-                            </Border>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </Grid>
-
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="4*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="Stock_Button" Grid.Column="0" Content="色を保存" Margin="15,15,7.5,15"
-                    Click="Stock_Button_Click"/>
-
-                <Button x:Name="Overwrite_Button" Grid.Column="1" Content="上書き" Margin="7.5,15,15,15"
-                    Click="Overwrite_Button_Click"/>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <ListBox x:Name="Stock_List" Grid.Column="0" Margin="15,0,10,15" FontSize="14"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="Stock_List_SelectionChanged">
-                    <ListBox.ItemTemplate>
+                <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="4" Margin="15" VerticalAlignment="Center"
+                    ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged"
+                    GotFocus="ColorSelect_ComboBox_GotFocus">
+                    <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="20" Height="Auto" Margin="5,0" BorderThickness="1" BorderBrush="Black"  >
@@ -136,35 +100,82 @@
                                         <SolidColorBrush Color="{Binding Color}"/>
                                     </Border.Background>
                                 </Border>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Text="{Binding Name}"/>
                             </StackPanel>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
 
-                    <Button x:Name="Stock_ToColorLabel_Button" Grid.Row="0" Content="反映" Margin="0,0,15,6"
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="Stock_Button" Grid.Column="0" Content="色を保存" Margin="15,15,7.5,15"
+                        Click="Stock_Button_Click"/>
+
+                    <Button x:Name="Overwrite_Button" Grid.Column="1" Content="上書き" Margin="7.5,15,15,15"
+                        Click="Overwrite_Button_Click"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox x:Name="Stock_List" Grid.Column="0" Margin="15,0,10,15" FontSize="14"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="Stock_List_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="20" Height="Auto" Margin="5,0" BorderThickness="1" BorderBrush="Black"  >
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{Binding Color}"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button x:Name="Stock_ToColorLabel_Button" Grid.Row="0" Content="反映" Margin="0,0,15,6"
                             Click="Stock_ToColorLabel_Button_Click"/>
 
-                    <Button x:Name="Stock_MoveUp_Button" Grid.Row="1" Content="▲" Margin="0,0,15,6"
+                        <Button x:Name="Stock_MoveUp_Button" Grid.Row="1" Content="▲" Margin="0,0,15,6"
                             Click="Stock_MoveUp_Button_Click"/>
 
-                    <Button x:Name="Stock_MoveDown_Button" Grid.Row="2" Content="▼" Margin="0,0,15,6"
+                        <Button x:Name="Stock_MoveDown_Button" Grid.Row="2" Content="▼" Margin="0,0,15,6"
                             Click="Stock_MoveDown_Button_Click"/>
 
-                    <Button x:Name="Stock_Delete_Button" Grid.Row="4" Content="削除" Margin="0,0,15,6"
+                        <Button x:Name="Stock_Delete_Button" Grid.Row="4" Content="削除" Margin="0,0,15,6"
                             Click="Stock_Delete_Button_Click"/>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
+
+        <StatusBar Grid.Row="1">
+            <Label x:Name="StatusLabel" Content="" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center"/>
+        </StatusBar>
     </Grid>
 </Window>

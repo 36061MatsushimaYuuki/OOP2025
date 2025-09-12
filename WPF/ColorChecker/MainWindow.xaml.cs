@@ -91,13 +91,14 @@ namespace ColorChecker {
             }
             var matched = Stock_List.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
             if(matched != null) {
-                MessageBox.Show("既にこの色は登録されています", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                StatusLabel.Content = "既にこの色は登録されています";
                 return;
             }
             Stock_List.Items.Insert(0, new MyColor {
                 Color = thisColor,
                 Name = colorName ?? "R: " + r + " G: " + g + " B: " + b
             });
+            StatusLabel.Content = "色を登録しました";
         }
 
         private MyColor[] GetColorList() {
@@ -106,6 +107,7 @@ namespace ColorChecker {
         }
 
         private void ColorSelect_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            StatusLabel.Content = "";
             if (ColorSelect_ComboBox.SelectedItem == null) {
                 return;
             }
@@ -144,6 +146,7 @@ namespace ColorChecker {
             }
             var selectedItem = (MyColor)Stock_List.SelectedItem;
             Stock_List.Items.Remove(selectedItem);
+            StatusLabel.Content = "色を削除しました";
         }
 
         private void Stock_ToColorLabel_Button_Click(object sender, RoutedEventArgs e) {
@@ -156,10 +159,12 @@ namespace ColorChecker {
             );
             isLightMode = false;
             Set_SliderValue(selectedItem.Color, false);
+            StatusLabel.Content = "色を反映しました";
         }
 
         /* Stockの位置移動機能を実装 */
         private void Stock_MoveUp_Button_Click(object sender, RoutedEventArgs e) {
+            StatusLabel.Content = "";
             if (Stock_List.SelectedItem == null || Stock_List.SelectedIndex <= 0) {
                 return;
             }
@@ -172,6 +177,7 @@ namespace ColorChecker {
         }
 
         private void Stock_MoveDown_Button_Click(object sender, RoutedEventArgs e) {
+            StatusLabel.Content = "";
             if (Stock_List.SelectedItem == null || Stock_List.SelectedIndex >= Stock_List.Items.Count - 1) {
                 return;
             }
@@ -185,7 +191,7 @@ namespace ColorChecker {
 
         private void Overwrite_Button_Click(object sender, RoutedEventArgs e) {
             if (Stock_List.SelectedItem == null) {
-                MessageBox.Show("項目が選択されていません", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                StatusLabel.Content = "上書きする項目が選択されていません";
                 return;
             }
             var index = Stock_List.SelectedIndex;
@@ -201,7 +207,7 @@ namespace ColorChecker {
             }
             var matched = Stock_List.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
             if (matched != null) {
-                MessageBox.Show("既にこの色は登録されています", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                StatusLabel.Content = "既に登録されている色のため上書きできません";
                 return;
             }
             Stock_List.Items[index] = new MyColor {
@@ -209,6 +215,7 @@ namespace ColorChecker {
                 Name = colorName ?? "R: " + r + " G: " + g + " B: " + b
             };
             Stock_List.SelectedIndex = index;
+            StatusLabel.Content = "色を上書きしました";
         }
 
         /*カラーをコンボボックスから取得しIndexに設定*/
