@@ -36,7 +36,8 @@ namespace ColorChecker {
             var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
             var index = ColorSelect_ComboBox.Items.IndexOf(equalItem);
             ColorSelect_ComboBox.SelectedIndex = index;
-            ColorCode_TextBlock.Text = String.Format("#{0:X2}{1:X2}{2:X2}", r, g, b);
+            ColorCode_TextBox.Text = String.Format("#{0:X2}{1:X2}{2:X2}", r, g, b);
+            RGBCode_TextBox.Text = r + ", " + g + ", " + b;
         }
 
         private void Stock_Button_Click(object sender, RoutedEventArgs e) {
