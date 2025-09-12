@@ -94,7 +94,7 @@ namespace ColorChecker {
                 MessageBox.Show("既にこの色は登録されています", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Stock_List.Items.Add(new MyColor {
+            Stock_List.Items.Insert(0, new MyColor {
                 Color = thisColor,
                 Name = colorName ?? "R: " + r + " G: " + g + " B: " + b
             });
