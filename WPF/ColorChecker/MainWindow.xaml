@@ -46,13 +46,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <TextBlock Text="R" Grid.Column="0" Grid.Row="0" FontSize="20"
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Slider x:Name="RedSlider" Grid.Column="1" Grid.Row="0"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
-                    ValueChanged="Slider_ValueChanged"/>
+                    ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
             <TextBox Grid.Column="2" Grid.Row="0" FontSize="14" VerticalAlignment="Center"
                 Text="{Binding ElementName=RedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -60,7 +61,7 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Slider x:Name="GreenSlider" Grid.Column="1" Grid.Row="1"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
-                    ValueChanged="Slider_ValueChanged"/>
+                    ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
             <TextBox Grid.Column="2" Grid.Row="1" FontSize="14" VerticalAlignment="Center"
                 Text="{Binding ElementName=GreenSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
             
@@ -68,11 +69,21 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Slider x:Name="BlueSlider" Grid.Column="1" Grid.Row="2"
                     IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
-                    ValueChanged="Slider_ValueChanged"/>
+                    ValueChanged="Slider_ValueChanged" GotFocus="Slider_GotFocus"/>
             <TextBox Grid.Column="2" Grid.Row="2" FontSize="14" VerticalAlignment="Center"
                 Text="{Binding ElementName=BlueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="3" Margin="20" VerticalAlignment="Center"
+            <Label Grid.Row="3" Background="LightGray" Grid.ColumnSpan="3" Height="2" VerticalAlignment="Top"/>
+
+            <TextBlock Text="V" Grid.Column="0" Grid.Row="3" FontSize="20"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Slider x:Name="LightSlider" Grid.Column="1" Grid.Row="3"
+                    IsSnapToTickEnabled="True" TickFrequency="1" Maximum="255" VerticalAlignment="Center"
+                    ValueChanged="LightSlider_ValueChanged" GotFocus="LightSlider_GotFocus"/>
+            <TextBox Grid.Column="2" Grid.Row="3" FontSize="14" VerticalAlignment="Center"
+                Text="{Binding ElementName=LightSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <ComboBox x:Name="ColorSelect_ComboBox" Grid.ColumnSpan="3" Grid.Row="4" Margin="15" VerticalAlignment="Center"
                        ItemsSource="{Binding}"  SelectedValue="{Binding Color}" SelectionChanged="ColorSelect_ComboBox_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

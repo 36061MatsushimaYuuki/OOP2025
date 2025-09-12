@@ -25,6 +25,10 @@ namespace ColorChecker {
             DataContext = GetColorList();
         }
 
+        Color _saveColor = Color.FromRgb(0, 0, 0);
+        double _saveLightValue = 0.0;
+        bool isLightMode = false;
+
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             var r = (byte)RedSlider.Value;
             var g = (byte)GreenSlider.Value;
@@ -38,6 +42,28 @@ namespace ColorChecker {
             ColorSelect_ComboBox.SelectedIndex = index;
             ColorCode_TextBox.Text = String.Format("#{0:X2}{1:X2}{2:X2}", r, g, b);
             RGBCode_TextBox.Text = r + ", " + g + ", " + b;
+            if(!isLightMode) {
+                LightSlider.Value = Math.Max(Math.Max(r, g), b);
+                _saveLightValue = LightSlider.Value;
+                _saveColor = thisColor;
+            }
+        }
+
+        private void Slider_GotFocus(object sender, RoutedEventArgs e) {
+            isLightMode = false;
+        }
+
+        private void LightSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if(!isLightMode || _saveLightValue <= 0) {
+                return;
+            }
+            RedSlider.Value = Math.Floor(_saveColor.R * (LightSlider.Value / _saveLightValue));
+            GreenSlider.Value = Math.Floor(_saveColor.G * (LightSlider.Value / _saveLightValue));
+            BlueSlider.Value = Math.Floor(_saveColor.B * (LightSlider.Value / _saveLightValue));
+        }
+
+        private void LightSlider_GotFocus(object sender, RoutedEventArgs e) {
+            isLightMode = true;
         }
 
         private void Stock_Button_Click(object sender, RoutedEventArgs e) {
