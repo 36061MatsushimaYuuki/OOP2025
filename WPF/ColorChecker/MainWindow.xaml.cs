@@ -25,6 +25,10 @@ namespace ColorChecker {
             DataContext = GetColorList();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            ColorSelect_ComboBox.SelectedIndex = 7;
+        }
+
         Color _saveColor = Color.FromRgb(0, 0, 0);
         double _saveLightValue = 0.0;
         bool isLightMode = false;

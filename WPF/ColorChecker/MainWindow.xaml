@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorChecker"
         mc:Ignorable="d"
-        Title="ColorChecker" Height="300" Width="720" MinHeight="300" MinWidth="720">
+        Title="ColorChecker" Height="300" Width="720" MinHeight="300" MinWidth="720" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.8*"/>
