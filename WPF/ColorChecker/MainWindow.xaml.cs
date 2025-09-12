@@ -151,6 +151,7 @@ namespace ColorChecker {
 
         private void Stock_ToColorLabel_Button_Click(object sender, RoutedEventArgs e) {
             if (Stock_List.SelectedItem == null) {
+                StatusLabel.Content = "削除する項目が選択されていません";
                 return;
             }
             var selectedItem = (MyColor)Stock_List.SelectedItem;
