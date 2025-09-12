@@ -13,7 +13,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="colorArea" Background="Black" Margin="10"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="colorArea" Grid.Row="0" Background="Black" Margin="10"/>
+
+            <TextBlock x:Name="ColorCode_TextBlock" Text="#000000" Grid.Row="1" Margin="10,0,10,10" FontSize="14"/>
+        </Grid>
 
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -93,9 +102,22 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <ListBox x:Name="Stock_List" Grid.Column="0" Margin="15,0,10,15" FontSize="14"
-                     SelectionChanged="Stock_List_SelectionChanged"/>
+                     SelectionChanged="Stock_List_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="20" Height="Auto" Margin="5,0" BorderThickness="1" BorderBrush="Black"  >
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding Color}"/>
+                                    </Border.Background>
+                                </Border>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
