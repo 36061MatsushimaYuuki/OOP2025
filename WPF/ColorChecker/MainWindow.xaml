@@ -8,9 +8,9 @@
         Title="ColorChecker" Height="300" Width="720" MinHeight="300" MinWidth="720" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.6*"/>
             <ColumnDefinition Width="2.8*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3.2*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -127,7 +127,7 @@
                 </Grid.ColumnDefinitions>
 
                 <ListBox x:Name="Stock_List" Grid.Column="0" Margin="15,0,10,15" FontSize="14"
-                     SelectionChanged="Stock_List_SelectionChanged">
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="Stock_List_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
