@@ -129,5 +129,33 @@ namespace ColorChecker {
             //移動先indexを選択しておくことでスムーズに
             Stock_List.SelectedIndex = index + 1;
         }
+
+        private void Overwrite_Button_Click(object sender, RoutedEventArgs e) {
+            if (Stock_List.SelectedItem == null) {
+                MessageBox.Show("項目が選択されていません", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var index = Stock_List.SelectedIndex;
+            var r = (byte)RedSlider.Value;
+            var g = (byte)GreenSlider.Value;
+            var b = (byte)BlueSlider.Value;
+            var thisColor = Color.FromRgb(r, g, b);
+            //comboBoxが選択されていない状態でも調べる
+            var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
+            string colorName = null;
+            if (equalItem != null) {
+                colorName = equalItem.Name;
+            }
+            var matched = Stock_List.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
+            if (matched != null) {
+                MessageBox.Show("既にこの色は登録されています", "ColorChecker", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Stock_List.Items[index] = new MyColor {
+                Color = thisColor,
+                Name = colorName ?? "R: " + r + " G: " + g + " B: " + b
+            };
+            Stock_List.SelectedIndex = index;
+        }
     }
 }
