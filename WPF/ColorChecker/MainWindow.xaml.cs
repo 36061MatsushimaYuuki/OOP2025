@@ -19,6 +19,9 @@ namespace ColorChecker {
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class MainWindow : Window {
+
+        Color loadColor = Colors.Black;
+
         public MainWindow() {
             InitializeComponent();
 
@@ -26,7 +29,7 @@ namespace ColorChecker {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            ColorSelect_ComboBox.SelectedIndex = 7;
+            GetColorToSetIndex(loadColor);
         }
 
         Color _saveColor = Color.FromRgb(0, 0, 0);
@@ -41,9 +44,7 @@ namespace ColorChecker {
             colorArea.Background = new SolidColorBrush(
                 thisColor
             );
-            var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == thisColor);
-            var index = ColorSelect_ComboBox.Items.IndexOf(equalItem);
-            ColorSelect_ComboBox.SelectedIndex = index;
+            GetColorToSetIndex(thisColor);
             ColorCode_TextBox.Text = String.Format("#{0:X2}{1:X2}{2:X2}", r, g, b);
             RGBCode_TextBox.Text = r + ", " + g + ", " + b;
             if(!isLightMode || (!isLightMode && ColorSelect_ComboBox.SelectedIndex < 0)) {
@@ -208,6 +209,13 @@ namespace ColorChecker {
                 Name = colorName ?? "R: " + r + " G: " + g + " B: " + b
             };
             Stock_List.SelectedIndex = index;
+        }
+
+        /*カラーをコンボボックスから取得しIndexに設定*/
+        private void GetColorToSetIndex(Color color) {
+            var equalItem = ColorSelect_ComboBox.Items.Cast<MyColor>().FirstOrDefault(c => c.Color == color);
+            var index = ColorSelect_ComboBox.Items.IndexOf(equalItem);
+            ColorSelect_ComboBox.SelectedIndex = index;
         }
     }
 }
