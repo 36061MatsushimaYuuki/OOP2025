@@ -104,5 +104,30 @@ namespace ColorChecker {
             );
             Set_SliderValue(selectedItem.Color);
         }
+
+        /* Stockの位置移動機能を実装 */
+        private void Stock_MoveUp_Button_Click(object sender, RoutedEventArgs e) {
+            if (Stock_List.SelectedItem == null || Stock_List.SelectedIndex <= 0) {
+                return;
+            }
+            var selectedItem = Stock_List.SelectedItem;
+            var index = Stock_List.SelectedIndex;
+            Stock_List.Items[index] = Stock_List.Items[index - 1];
+            Stock_List.Items[index - 1] = selectedItem;
+            //移動先indexを選択しておくことでスムーズに
+            Stock_List.SelectedIndex = index - 1;
+        }
+
+        private void Stock_MoveDown_Button_Click(object sender, RoutedEventArgs e) {
+            if (Stock_List.SelectedItem == null || Stock_List.SelectedIndex >= Stock_List.Items.Count - 1) {
+                return;
+            }
+            var selectedItem = Stock_List.SelectedItem;
+            var index = Stock_List.SelectedIndex;
+            Stock_List.Items[index] = Stock_List.Items[index + 1];
+            Stock_List.Items[index + 1] = selectedItem;
+            //移動先indexを選択しておくことでスムーズに
+            Stock_List.SelectedIndex = index + 1;
+        }
     }
 }
