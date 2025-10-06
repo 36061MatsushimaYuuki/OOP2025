@@ -10,14 +10,19 @@ namespace PrismObservesSample {
     class MainWindowViewModel : BindableBase {
         //コンストラクタ
         public MainWindowViewModel() {
-            SumCommand = new DelegateCommand(ExecuteSum);
+            SumCommand = new DelegateCommand(ExecuteSum, CanExecuteSum)
+                .ObservesProperty(() => Input1)
+                .ObservesProperty(() => Input2);
         }
 
         //足し算の処理
         private void ExecuteSum() {
-            if(int.TryParse(Input1, out int int1) && int.TryParse(Input2, out int int2)) {
-                Result = (int1 + int2).ToString();
-            }
+            Result = (int.Parse(Input1) + int.Parse(Input2)).ToString();
+        }
+
+        //判定の処理
+        private bool CanExecuteSum() {
+            return int.TryParse(Input1, out _) && int.TryParse(Input2, out _);
         }
 
         private string _input1 = "";
