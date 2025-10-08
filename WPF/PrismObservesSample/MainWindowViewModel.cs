@@ -12,7 +12,7 @@ namespace PrismObservesSample {
         public MainWindowViewModel() {
             SumCommand = new DelegateCommand(ExecuteSum, CanExecuteSum)
                 .ObservesProperty(() => Input1)
-                .ObservesProperty(() => Input2);
+                .ObservesProperty(() => Input2); //プロパティチェック
         }
 
         //足し算の処理
@@ -25,6 +25,7 @@ namespace PrismObservesSample {
             return int.TryParse(Input1, out _) && int.TryParse(Input2, out _);
         }
 
+        //プロパティ
         private string _input1 = "";
         public string Input1 {
             get => _input1;
