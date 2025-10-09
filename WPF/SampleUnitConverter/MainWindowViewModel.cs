@@ -41,6 +41,7 @@ namespace SampleUnitConverter {
             }
         }
 
+        //コンストラクタ
         public MainWindowViewModel() {
             CurrentMetricUnit = MetricUnit.Units.First();
             CurrentImperialUnit = ImperialUnit.Units.First();
