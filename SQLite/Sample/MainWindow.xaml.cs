@@ -2,6 +2,7 @@
 using SQLite;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,24 +19,29 @@ namespace Sample;
 /// Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window {
-    private ObservableCollection<Person> _persons = new ObservableCollection<Person>();
+    private List<Person> _persons = new List<Person>();
 
     public MainWindow() {
         InitializeComponent();
-        //ReadDatabase();
-        _persons.Add(new Person { Id = 1, Name = "A", Phone = "1" });
-        PersonListView.ItemsSource = _persons;
+        ReadDatabase();
     }
 
     private void ReadDatabase() {
         using (var connection = new SQLiteConnection(App.databasePath)) {
             connection.CreateTable<Person>();
-            //var persons = connection.Table<Person>().ToList();
+            _persons = connection.Table<Person>().ToList();
         }
+        PersonListView.ItemsSource = _persons;
+    }
+
+    private void ResetInputTextBox() {
+        NameTextBox.Text = "";
+        PhoneTextBox.Text = "";
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e) {
         if(NameTextBox.Text == "" || PhoneTextBox.Text == "") {
+            //空欄だったら登録不可
             return;
         }
 
@@ -47,11 +53,64 @@ public partial class MainWindow : Window {
         using(var connection = new SQLiteConnection(App.databasePath)) {
             connection.CreateTable<Person>();
             connection.Insert(person);
+            ReadDatabase();
         }
+        //登録後空欄
+        ResetInputTextBox();
     }
 
     private void ReadButton_Click(object sender, RoutedEventArgs e) {
-        _persons.Add(new Person { Id = 1, Name = "B", Phone = "2" });
-        //ReadDatabase();
+        //正直不要
+        ReadDatabase();
+    }
+
+    private void DeleteButton_Click(object sender, RoutedEventArgs e) {
+        var item = PersonListView.SelectedItem as Person;
+        if(item == null) {
+            //未選択時削除不可
+            return;
+        }
+
+        using (var connection = new SQLiteConnection(App.databasePath)) {
+            connection.CreateTable<Person>();
+            connection.Delete(item);
+            ReadDatabase();
+        }
+    }
+
+    private void PersonListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        var selectedPerson = PersonListView.SelectedItem as Person;
+        if (selectedPerson == null) {
+            //未選択時なし
+            return;
+        }
+
+        NameTextBox.Text = selectedPerson.Name;
+        PhoneTextBox.Text = selectedPerson.Phone;
+    }
+
+    private void UpdateButton_Click(object sender, RoutedEventArgs e) {
+        var item = PersonListView.SelectedItem as Person;
+        if (item == null) {
+            //未選択時なし
+            return;
+        }
+
+        item.Name = NameTextBox.Text;
+        item.Phone = PhoneTextBox.Text;
+
+        using (var connection = new SQLiteConnection(App.databasePath)) {
+            connection.CreateTable<Person>();
+            connection.Update(item);
+            ReadDatabase();
+        }
+        ResetInputTextBox();
+    }
+
+    //リストビューのフィルタリング
+    private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+        var filterList = _persons.Where(x => x.Name.Contains(SearchTextBox.Text));
+
+        PersonListView.ItemsSource = filterList;
     }
 }
