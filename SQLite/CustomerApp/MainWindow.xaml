@@ -39,15 +39,14 @@
                 
                 <StackPanel Grid.Column="0" Margin="5">
                     <TextBlock Text="名前" Margin="5,6,5,7"/>
-                    <TextBlock Text="電話番号" Margin="5,5,5,7"/>
                     <TextBlock Text="郵便番号" Margin="5,5,5,7"/>
                     <TextBlock Text="住所" Margin="5,5,5,7"/>
+                    <TextBlock Text="電話番号" Margin="5,5,5,7"/>
                     <Button x:Name="OpenPicture_Button" Content="画像" Margin="5,5,5,7" Click="OpenPicture_Button_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Margin="5">
                     <TextBox x:Name="Name_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
-                    <TextBox x:Name="Phone_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -58,6 +57,7 @@
                         <Button Grid.Column="1" x:Name="PostCode_Search_Button" Content="検索" HorizontalAlignment="Right" Click="PostCode_Search_Button_Click" Margin="5"/>
                     </Grid>
                     <TextBox x:Name="Address_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
+                    <TextBox x:Name="Phone_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -119,9 +119,9 @@
                                 <TextBlock Text="{Binding Id}"/>
                                  -->
                                 <TextBlock Text="{Binding Name}" FontSize="20"/>
-                                <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
                                 <TextBlock Text="{Binding PostCode, StringFormat='〒 {0}'}" Foreground="LightSalmon"/>
                                 <TextBlock Text="{Binding Address}" Foreground="Green"/>
+                                <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
                             </StackPanel>
 
                             <Image Grid.Column="1" Source="{Binding Picture}" Width="100" Stretch="Uniform" HorizontalAlignment="Right"/>
