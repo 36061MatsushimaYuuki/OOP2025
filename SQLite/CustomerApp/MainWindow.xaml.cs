@@ -42,6 +42,7 @@ public partial class MainWindow : Window {
     private void Reset_InputItems() {
         Name_TextBox.Text = "";
         Phone_TextBox.Text = "";
+        PostCode_TextBox.Text = "";
         Address_TextBox.Text = "";
         Picture_Image.Source = null;
         Search_TextBox.Text = "";
@@ -57,7 +58,7 @@ public partial class MainWindow : Window {
     }
 
     private void Save_Button_Click(object sender, RoutedEventArgs e) {
-        if(Name_TextBox.Text == "" || Phone_TextBox.Text == "" || Address_TextBox.Text == "") {
+        if(Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "") {
             Status_Text.Text = "入力項目が不十分です";
             return;
         }
@@ -65,6 +66,7 @@ public partial class MainWindow : Window {
         var customer = new Customer() {
             Name = Name_TextBox.Text,
             Phone = Phone_TextBox.Text,
+            PostCode = PostCode_TextBox.Text,
             Address = Address_TextBox.Text,
             Picture = ImageToByteArray(Picture_Image.Source),
         };
@@ -92,6 +94,7 @@ public partial class MainWindow : Window {
 
         selectedCustomer.Name = Name_TextBox.Text;
         selectedCustomer.Phone = Phone_TextBox.Text;
+        selectedCustomer.PostCode = PostCode_TextBox.Text;
         selectedCustomer.Address = Address_TextBox.Text;
         selectedCustomer.Picture = ImageToByteArray(Picture_Image.Source);
 
@@ -136,6 +139,7 @@ public partial class MainWindow : Window {
 
         Name_TextBox.Text = selectedCustomer.Name;
         Phone_TextBox.Text = selectedCustomer.Phone;
+        PostCode_TextBox.Text = selectedCustomer.PostCode;
         Address_TextBox.Text = selectedCustomer.Address;
         Picture_Image.Source = ByteArrayToImage(selectedCustomer.Picture);
         Status_Text.Text = "";
@@ -149,6 +153,9 @@ public partial class MainWindow : Window {
             filterList = _customers.Where(x => x.Phone.Contains(Search_TextBox.Text));
         }
         if (filterList.Count() <= 0) {
+            filterList = _customers.Where(x => x.PostCode.Contains(Search_TextBox.Text));
+        }
+        if (filterList.Count() <= 0) {
             filterList = _customers.Where(x => x.Address.Contains(Search_TextBox.Text));
         }
 
@@ -159,7 +166,7 @@ public partial class MainWindow : Window {
 
     private void Input_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         Status_Text.Text = "";
-        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || Address_TextBox.Text == "") {
+        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "") {
             Save_Button.IsEnabled = false;
             return;
         }
@@ -199,5 +206,9 @@ public partial class MainWindow : Window {
 
             return bi;
         }
+    }
+
+    private void PostCode_Search_Button_Click(object sender, RoutedEventArgs e) {
+
     }
 }

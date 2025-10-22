@@ -20,9 +20,9 @@
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.22*"/>
+                <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="0.85*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
 
             <Border BorderBrush="LightGray" BorderThickness="0,0,2,0" Margin="-5,-5,0,-5" Grid.RowSpan="3"/>
@@ -40,13 +40,23 @@
                 <StackPanel Grid.Column="0" Margin="5">
                     <TextBlock Text="名前" Margin="5,6,5,7"/>
                     <TextBlock Text="電話番号" Margin="5,5,5,7"/>
+                    <TextBlock Text="郵便番号" Margin="5,5,5,7"/>
                     <TextBlock Text="住所" Margin="5,5,5,7"/>
-                    <Button x:Name="OpenPicture_Button" Content="画像" Height="45" Margin="5,5,5,7" Click="OpenPicture_Button_Click"/>
+                    <Button x:Name="OpenPicture_Button" Content="画像" Margin="5,5,5,7" Click="OpenPicture_Button_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Margin="5">
                     <TextBox x:Name="Name_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
                     <TextBox x:Name="Phone_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox Grid.Column="0" x:Name="PostCode_TextBox" TextChanged="Input_TextBox_TextChanged" Margin="5"/>
+                        <Button Grid.Column="1" x:Name="PostCode_Search_Button" Content="検索" HorizontalAlignment="Right" Click="PostCode_Search_Button_Click" Margin="5"/>
+                    </Grid>
                     <TextBox x:Name="Address_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -83,7 +93,7 @@
                         <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="検索"/>
+                    <TextBlock Text="ソート"/>
 
                     <TextBox Grid.Column="1" x:Name="Search_TextBox" TextChanged="Search_TextBox_TextChanged"/>
                 </Grid>
@@ -110,6 +120,7 @@
                                  -->
                                 <TextBlock Text="{Binding Name}" FontSize="20"/>
                                 <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
+                                <TextBlock Text="{Binding PostCode, StringFormat='〒 {0}'}" Foreground="LightSalmon"/>
                                 <TextBlock Text="{Binding Address}" Foreground="Green"/>
                             </StackPanel>
 

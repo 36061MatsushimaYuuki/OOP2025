@@ -19,6 +19,10 @@ namespace CustomerApp.Data {
         /// </summary>
         public string Phone { get; set; } = string.Empty;
         /// <summary>
+        /// 郵便番号
+        /// </summary>
+        public string PostCode { get; set; } = string.Empty;
+        /// <summary>
         /// 住所
         /// </summary>
         public string Address { get; set; } = string.Empty;
