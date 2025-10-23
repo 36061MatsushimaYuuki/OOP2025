@@ -54,7 +54,7 @@ public partial class MainWindow : Window {
 
     private void OpenPicture_Button_Click(object sender, RoutedEventArgs e) {
         var fileDialog = new OpenFileDialog();
-        fileDialog.Filter = "画像ファイル (*.jpg;.jpeg;*.png;*.webp)|*.jpg;.jpeg;*.png;*.webp";
+        fileDialog.Filter = "画像ファイル (*.jpg;*.jpeg;*.png;*.webp)|*.jpg;*.jpeg;*.png;*.webp|すべてのファイル (*.*)|*.*";
         if (fileDialog.ShowDialog() == true) { // ?? false だとエラーが出るので廃止
             Uri imageUri = new Uri(fileDialog.FileName);
             Picture_Image.Source = new BitmapImage(imageUri);
