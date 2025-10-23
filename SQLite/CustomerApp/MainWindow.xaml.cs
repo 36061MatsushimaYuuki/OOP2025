@@ -193,7 +193,7 @@ public partial class MainWindow : Window {
                 PostCode_Search_Button.IsEnabled = false;
             }
         }
-        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "" || !PostCode_Search_Button.IsEnabled || Phone_TextBox.Text.Length != 13) {
+        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "" || !PostCode_Search_Button.IsEnabled) {
             Save_Button.IsEnabled = false;
             Update_Button.IsEnabled = false;
             return;
