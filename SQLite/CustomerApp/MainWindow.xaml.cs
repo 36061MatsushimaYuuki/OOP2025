@@ -207,6 +207,7 @@ public partial class MainWindow : Window {
     }
 
     private async void PostCode_Search_Button_Click(object sender, RoutedEventArgs e) {
+        Status_Text.Text = "";
         var postCode = PostCode_TextBox.Text.Replace("-", "");
         var url = "https://jp-postal-code-api.ttskch.com/api/v1/" + postCode + ".json";
 
