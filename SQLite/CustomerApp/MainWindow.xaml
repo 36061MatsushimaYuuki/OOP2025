@@ -54,7 +54,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <TextBox Grid.Column="0" x:Name="PostCode_TextBox" TextChanged="Input_TextBox_TextChanged" Margin="5"/>
-                        <Button Grid.Column="1" x:Name="PostCode_Search_Button" Content="検索" HorizontalAlignment="Right" Click="PostCode_Search_Button_Click" Margin="5"/>
+                        <Button Grid.Column="1" x:Name="PostCode_Search_Button" Content="検索" Width="50" HorizontalAlignment="Right" Click="PostCode_Search_Button_Click" Margin="5" IsEnabled="False"/>
                     </Grid>
                     <TextBox x:Name="Address_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>
                     <TextBox x:Name="Phone_TextBox" Margin="5" TextChanged="Input_TextBox_TextChanged"/>

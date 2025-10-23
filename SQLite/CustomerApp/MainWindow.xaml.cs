@@ -3,7 +3,11 @@ using Microsoft.Win32;
 using SQLite;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -63,6 +67,11 @@ public partial class MainWindow : Window {
             return;
         }
 
+        if (!PostCode_TextBox.Text.Contains("-") && PostCode_TextBox.Text.Length == 7 && int.TryParse(PostCode_TextBox.Text, out _)) {
+            string formatted = $"{PostCode_TextBox.Text.Substring(0, 3)}-{PostCode_TextBox.Text.Substring(3, 4)}";
+            PostCode_TextBox.Text = formatted;
+        }
+
         var customer = new Customer() {
             Name = Name_TextBox.Text,
             Phone = Phone_TextBox.Text,
@@ -90,6 +99,11 @@ public partial class MainWindow : Window {
 
         if (MessageBox.Show("本当にデータを更新しますか？", "顧客管理アプリケーション", MessageBoxButton.YesNo, MessageBoxImage.None) == MessageBoxResult.No) {
             return;
+        }
+
+        if (!PostCode_TextBox.Text.Contains("-") && PostCode_TextBox.Text.Length == 7 && int.TryParse(PostCode_TextBox.Text, out _)) {
+            string formatted = $"{PostCode_TextBox.Text.Substring(0, 3)}-{PostCode_TextBox.Text.Substring(3, 4)}";
+            PostCode_TextBox.Text = formatted;
         }
 
         selectedCustomer.Name = Name_TextBox.Text;
@@ -143,21 +157,21 @@ public partial class MainWindow : Window {
         Address_TextBox.Text = selectedCustomer.Address;
         Picture_Image.Source = ByteArrayToImage(selectedCustomer.Picture);
         Status_Text.Text = "";
-        Update_Button.IsEnabled = true;
+        if(!PostCode_Search_Button.IsEnabled) {
+            Update_Button.IsEnabled = false;
+        } else {
+            Update_Button.IsEnabled = true;
+        }
         Delete_Button.IsEnabled = true;
     }
 
     private void Search_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
-        var filterList = _customers.Where(x => x.Name.Contains(Search_TextBox.Text));
-        if(filterList.Count() <= 0) {
-            filterList = _customers.Where(x => x.Phone.Contains(Search_TextBox.Text));
-        }
-        if (filterList.Count() <= 0) {
-            filterList = _customers.Where(x => x.PostCode.Contains(Search_TextBox.Text));
-        }
-        if (filterList.Count() <= 0) {
-            filterList = _customers.Where(x => x.Address.Contains(Search_TextBox.Text));
-        }
+        var nameFilter = _customers.Where(x => x.Name.Contains(Search_TextBox.Text));
+        var postCodeFilter = _customers.Where(x => x.PostCode.Contains(Search_TextBox.Text));
+        var addressFilter = _customers.Where(x => x.Address.Contains(Search_TextBox.Text));
+        var phoneFilter = _customers.Where(x => x.Phone.Contains(Search_TextBox.Text));
+
+        var filterList = nameFilter.Union(postCodeFilter).Union(addressFilter).Union(phoneFilter);
 
         Customer_ListView.ItemsSource = filterList;
         List_Counter.Text = "全 " + filterList.Count() + "/" + _count + " 件";
@@ -166,11 +180,61 @@ public partial class MainWindow : Window {
 
     private void Input_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         Status_Text.Text = "";
-        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "") {
+        if(PostCode_TextBox.Text.Length < 8) {
+            if(PostCode_TextBox.Text.Length == 7 && !PostCode_TextBox.Text.Contains("-") && int.TryParse(PostCode_TextBox.Text, out _)) {
+                PostCode_Search_Button.IsEnabled = true;
+            } else {
+                PostCode_Search_Button.IsEnabled = false;
+            }
+        } else {
+            if(PostCode_TextBox.Text.Length == 8 && PostCode_TextBox.Text[3] == '-') {
+                PostCode_Search_Button.IsEnabled = true;
+            } else {
+                PostCode_Search_Button.IsEnabled = false;
+            }
+        }
+        if (Name_TextBox.Text == "" || Phone_TextBox.Text == "" || PostCode_TextBox.Text == "" || Address_TextBox.Text == "" || !PostCode_Search_Button.IsEnabled || Phone_TextBox.Text.Length != 13) {
             Save_Button.IsEnabled = false;
+            Update_Button.IsEnabled = false;
             return;
         }
         Save_Button.IsEnabled = true;
+        var selectedCustomer = Customer_ListView.SelectedItem as Customer;
+        if (selectedCustomer != null) {
+            Update_Button.IsEnabled = true;
+            return;
+        }
+    }
+
+    private async void PostCode_Search_Button_Click(object sender, RoutedEventArgs e) {
+        var postCode = PostCode_TextBox.Text.Replace("-", "");
+        var url = "https://jp-postal-code-api.ttskch.com/api/v1/" + postCode + ".json";
+
+        using(HttpClient client = new HttpClient()) {
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound) {
+                // 404 の場合の処理（例：エラーメッセージを表示）
+                Status_Text.Text = "住所が見つかりませんでした";
+                return;
+            }
+
+            if (!response.IsSuccessStatusCode) {
+                // その他のエラー（例：500など）に対する処理
+                Status_Text.Text = $"エラーが発生しました: {response.StatusCode}";
+                return;
+            }
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<PostCode>(responseBody);
+            if (data == null || data.addresses == null || data.addresses.Count == 0) {
+                Status_Text.Text = "住所情報が取得できませんでした";
+                return;
+            }
+
+            var ja = data.addresses[0].ja;
+            Address_TextBox.Text = $"{ja.prefecture}{ja.address1}{ja.address2}";
+            Status_Text.Text = "住所情報を取得しました";
+        }
     }
 
     public byte[]? ImageToByteArray(ImageSource? image) {
@@ -206,9 +270,5 @@ public partial class MainWindow : Window {
 
             return bi;
         }
-    }
-
-    private void PostCode_Search_Button_Click(object sender, RoutedEventArgs e) {
-
     }
 }
