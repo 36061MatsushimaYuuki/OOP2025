@@ -95,7 +95,7 @@ namespace Exercise01 {
                         b.Title
                     }
                 )
-                .Where(b => b.Category == "Development")
+                .Where(b => b.Category.Equals("Development"))
                 .GroupBy(b => b.PublishedYear);
            foreach (var group in groups) {
                 Console.WriteLine($"# {group.Key}");
