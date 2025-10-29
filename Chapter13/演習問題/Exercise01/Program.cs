@@ -61,20 +61,21 @@ namespace Exercise01 {
 
         private static void Exercise1_6() {
             Console.WriteLine("[6] -");
-            var groups = Library.Categories
-                .GroupJoin(Library.Books,
-                    c => c.Id,
-                    b => b.CategoryId,
-                    (c, books) => new {
-                        Category = c.Name,
-                        Books = books
+            var groups = Library.Books
+                .Join(Library.Categories,
+                    book => book.CategoryId,
+                    category => category.Id,
+                    (book, category) => new {
+                        Category = category.Name,
+                        book.Title
                     }
                 )
-                .OrderBy(c => c.Category);
+                .OrderBy(b => b.Category)
+                .GroupBy(b => b.Category);
             foreach (var group in groups) {
-                Console.WriteLine(group.Category);
-                foreach (var book in group.Books) {
-                    Console.WriteLine($"  {book.Title}");
+                Console.WriteLine($"# {group.Key}");
+                foreach (var book in group) {
+                    Console.WriteLine($"   {book.Title}");
                 }
             }
         }

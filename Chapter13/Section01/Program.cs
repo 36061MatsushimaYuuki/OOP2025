@@ -45,6 +45,22 @@
                 //bookはnullではない
                 Console.WriteLine($"{book3!.PublishedYear}年 {book3!.Title} ({book3!.Price})");
             }
+
+            Console.WriteLine(); //改行
+
+            var joined = Library.Books
+                .Join(Library.Categories,
+                    book => book.CategoryId,
+                    category => category.Id,
+                    (book, category) => new {
+                        book.Title,
+                        Category = category.Name,
+                        book.PublishedYear,
+                    }
+                );
+            foreach (var book4 in joined) {
+                Console.WriteLine($"{book4.Title},{book4.Category},{book4.PublishedYear}");
+            }
         }
     }
 }
