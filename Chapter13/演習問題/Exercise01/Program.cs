@@ -73,8 +73,8 @@ namespace Exercise01 {
                         book.Title
                     }
                 )
-                .OrderBy(b => b.Category)
-                .GroupBy(b => b.Category);
+                .GroupBy(b => b.Category)
+                .OrderBy(g => g.Key);
             foreach (var group in groups) {
                 Console.WriteLine($"# {group.Key}");
                 foreach (var book in group) {
