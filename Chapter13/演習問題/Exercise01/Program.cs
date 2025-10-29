@@ -1,4 +1,7 @@
 ﻿
+using System.Net.WebSockets;
+using System.Security.Cryptography;
+
 namespace Exercise01 {
     internal class Program {
         static void Main(string[] args) {
@@ -82,6 +85,24 @@ namespace Exercise01 {
 
         private static void Exercise1_7() {
             Console.WriteLine("[7] -");
+            var groups = Library.Books
+                .Join(Library.Categories,
+                    b => b.CategoryId,
+                    c => c.Id,
+                    (b, c) => new {
+                        Category = c.Name,
+                        b.PublishedYear,
+                        b.Title
+                    }
+                )
+                .Where(b => b.Category == "Development")
+                .GroupBy(b => b.PublishedYear);
+           foreach (var group in groups) {
+                Console.WriteLine($"# {group.Key}");
+                foreach (var book in group) {
+                    Console.WriteLine($"   {book.Title}");
+                }
+           }
         }
 
         private static void Exercise1_8() {
