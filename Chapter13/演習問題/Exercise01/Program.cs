@@ -20,12 +20,14 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_2() {
+            Console.WriteLine("[2] -");
             var maxPrice = Library.Books
                 .MaxBy(x => x.Price);
             Console.WriteLine(maxPrice);
         }
 
         private static void Exercise1_3() {
+            Console.WriteLine("[3] -");
             var groups = Library.Books
                 .GroupBy(b => b.PublishedYear);
             foreach (var group in groups) {
@@ -34,23 +36,29 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_4() {
-            
+            Console.WriteLine("[4] -");
+            var yearPriceOrder = Library.Books
+                .OrderByDescending(b => b.PublishedYear)
+                .ThenByDescending(b => b.Price);
+            foreach (var book in yearPriceOrder) {
+                Console.WriteLine($"{book.PublishedYear}年 {book.Price}円 {book.Title}");
+            }
         }
 
         private static void Exercise1_5() {
-            
+            Console.WriteLine("[5] -");
         }
 
         private static void Exercise1_6() {
-            
+            Console.WriteLine("[6] -");
         }
 
         private static void Exercise1_7() {
-            
+            Console.WriteLine("[7] -");
         }
 
         private static void Exercise1_8() {
-            
+            Console.WriteLine("[8] -");
         }
     }
 }
