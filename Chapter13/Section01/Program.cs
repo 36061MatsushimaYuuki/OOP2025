@@ -61,6 +61,24 @@
             foreach (var book4 in joined) {
                 Console.WriteLine($"{book4.Title},{book4.Category},{book4.PublishedYear}");
             }
+
+            Console.WriteLine(); //改行
+
+            var groups2 = Library.Categories
+                .GroupJoin(Library.Books,
+                    c => c.Id,
+                    b => b.CategoryId,
+                    (c, books) => new {
+                        Category = c.Name,
+                        Books = books
+                    }
+                );
+            foreach (var group in groups2) {
+                Console.WriteLine(group.Category);
+                foreach(var book5 in group.Books) {
+                    Console.WriteLine($"   {book5.Title} ({book5.PublishedYear}年)");
+                }
+            }
         }
     }
 }

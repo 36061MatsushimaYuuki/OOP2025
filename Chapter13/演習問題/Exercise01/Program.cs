@@ -115,11 +115,10 @@ namespace Exercise01 {
                         Category = c.Name,
                         Count = books.Count(),
                     }
-                );
+                )
+                .Where(c => c.Count >= 4);
             foreach (var obj in groups) {
-                if(obj.Count >= 4) {
-                    Console.WriteLine($"{obj.Category}");
-                }
+                Console.WriteLine($"{obj.Category}");
             }
         }
     }
