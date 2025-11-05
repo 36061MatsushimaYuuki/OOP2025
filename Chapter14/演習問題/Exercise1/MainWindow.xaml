@@ -1,0 +1,36 @@
+﻿<Window x:Class="Exercise1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="600" ResizeMode="NoResize" FontSize="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="FileOpen_Button" Content="ファイルを開く" Width="150" Height="50" Click="Button_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button x:Name="Close_Button" Content="閉じる" Width="150" Height="50" Click="Button_Click_1" Margin="20,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <ScrollViewer Height="675">
+                <ItemsControl VirtualizingPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <StackPanel x:Name="Loaded_Block" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <!-- ここに読み込んだ要素を追加 -->
+                    </StackPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <StatusBar Height="30" VerticalAlignment="Bottom">
+                <Label x:Name="Status_Label" Content="" HorizontalAlignment="Left"/>
+                <ProgressBar x:Name="Loaded_ProgressBar" Height="15" Width="120" HorizontalAlignment="Right" Visibility="Hidden"/>
+            </StatusBar>
+        </StackPanel>
+    </Grid>
+</Window>
