@@ -1,0 +1,29 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WebBrowser"
+        xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="WebBrowser.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!--アドレスバー-->
+            <RowDefinition Height="Auto"/> <!--プログレスバー-->
+            <RowDefinition Height="*"/> <!--ブラウザー-->
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="5">
+            <Button x:Name="Back_Button" Content="戻る" Width="60" Margin="0,0,5,0" Click="Back_Button_Click"/>
+            <Button x:Name="Forward_Button" Content="進む" Width="60" Margin="0,0,5,0" Click="Forward_Button_Click"/>
+            <TextBox x:Name="AddressBar" Width="570" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <Button x:Name="Go_Button" Content="移動" Width="60" HorizontalAlignment="Right" Click="Go_Button_Click"/>
+        </DockPanel>
+
+        <ProgressBar x:Name="Loading_ProgressBar" Grid.Row="1" Height="5"/>
+
+        <Wpf:WebView2 x:Name="WebView" Grid.Row="2" Margin="5" ContentLoading="WebView_ContentLoading"/>
+
+    </Grid>
+</Window>
