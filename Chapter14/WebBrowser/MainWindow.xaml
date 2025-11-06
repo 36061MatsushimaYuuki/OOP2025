@@ -14,6 +14,7 @@
             <RowDefinition Height="*"/> <!--ブラウザー-->
         </Grid.RowDefinitions>
 
+        <!--アドレスバー-->
         <DockPanel Grid.Row="0" Margin="5">
             <Button x:Name="Back_Button" Content="戻る" Width="60" Margin="0,0,5,0" Click="Back_Button_Click"/>
             <Button x:Name="Forward_Button" Content="進む" Width="60" Margin="0,0,5,0" Click="Forward_Button_Click"/>
@@ -21,8 +22,11 @@
             <Button x:Name="Go_Button" Content="移動" Width="60" HorizontalAlignment="Right" Click="Go_Button_Click"/>
         </DockPanel>
 
-        <ProgressBar x:Name="Loading_ProgressBar" Grid.Row="1" Height="5"/>
+        <!--プログレスバー-->
+        <ProgressBar x:Name="Loading_ProgressBar" Grid.Row="1" Height="4" Margin="5,0,5,5"
+                     Minimum="0" Maximum="100" Visibility="Collapsed" IsIndeterminate="True"/>
 
+        <!--ブラウザー-->
         <Wpf:WebView2 x:Name="WebView" Grid.Row="2" Margin="5" ContentLoading="WebView_ContentLoading"/>
 
     </Grid>

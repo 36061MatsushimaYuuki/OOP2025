@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.Web.WebView2.Core;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,10 +19,30 @@ namespace WebBrowser;
 public partial class MainWindow : Window {
     public MainWindow() {
         InitializeComponent();
+        InitializeAsync();
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e) {
         Check_BackForward();
+    }
+
+    private async void InitializeAsync() {
+        await WebView.EnsureCoreWebView2Async();
+
+        WebView.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+        WebView.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
+    }
+
+    //読み込み開始したらプログレスバー表示
+    private void CoreWebView2_NavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e) {
+        Loading_ProgressBar.Visibility = Visibility.Visible;
+        Loading_ProgressBar.IsIndeterminate = true;
+    }
+
+    //読み込み完了したらプログレスバー非表示
+    private void CoreWebView2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e) {
+        Loading_ProgressBar.Visibility = Visibility.Collapsed;
+        Loading_ProgressBar.IsIndeterminate = false;
     }
 
     private void Back_Button_Click(object sender, RoutedEventArgs e) {
@@ -33,10 +54,10 @@ public partial class MainWindow : Window {
     }
 
     private void Go_Button_Click(object sender, RoutedEventArgs e) {
-        var url = AddressBar.Text;
-        if(url == "") {
+        var url = AddressBar.Text.Trim();
+        if(string.IsNullOrWhiteSpace(url)) {
             return;
-        } 
+        }
         WebView.Source = new Uri(url);
     }
 
