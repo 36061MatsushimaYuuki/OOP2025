@@ -1,0 +1,29 @@
+11. SSL/TLS（Secure Sockets Layer / Transport Layer Security）
+    - インターネット通信を暗号化するプロトコル。Webサイトの安全性を確保するために使用される。
+
+12. IPアドレス（Internet Protocol Address）
+    - ネットワーク上の機器を識別するための番号。IPv4とIPv6の2種類がある。
+
+13. DNS（Domain Name System）
+    - ドメイン名をIPアドレスに変換する仕組み。Webサイトの名前解決に使われる。
+
+14. SaaS（Software as a Service）
+    - クラウド上で提供されるソフトウェア。インストール不要でブラウザから利用可能。例：Google Workspace、Salesforce。
+
+15. IoT（Internet of Things）
+    - モノがインターネットに接続され、情報をやり取りする技術。スマート家電やセンサーなどが含まれる。
+
+16. 機械学習（Machine Learning）
+    - データからパターンを学習し、予測や分類を行うAI技術の一分野。
+
+17. DevOps（Development + Operations）
+    - 開発と運用の連携を強化し、ソフトウェアのリリースを迅速化・安定化する手法。
+
+18. ハッシュ関数（Hash Function）
+    - 任意の長さのデータを固定長の値に変換する関数。パスワード管理やデータ整合性確認に使われる。
+
+19. CDN（Content Delivery Network）
+    - Webコンテンツを地理的に分散したサーバーから高速配信する仕組み。表示速度の向上に貢献。
+
+20. レスポンシブデザイン（Responsive Design）
+    - デバイスの画面サイズに応じてWebページのレイアウトを自動調整する設計手法。
