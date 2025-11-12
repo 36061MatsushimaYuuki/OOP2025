@@ -1,0 +1,46 @@
+// Extended Java-like pseudo code with various keywords
+
+public abstract class Device implements Connectable {
+    protected String deviceName;
+    private static final int MAX_CONNECTIONS = 5;
+
+    public Device(String name) {
+        this.deviceName = name;
+    }
+
+    public abstract void start();
+
+    public void connect() {
+        System.out.println(deviceName + " is connecting...");
+    }
+
+    protected void disconnect() {
+        System.out.println(deviceName + " is disconnecting...");
+    }
+}
+
+interface Connectable {
+    void connect();
+    void disconnect();
+}
+
+class Smartphone extends Device {
+    private String os;
+
+    public Smartphone(String name, String os) {
+        super(name);
+        this.os = os;
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Starting smartphone with OS: " + os);
+    }
+
+    public static void main(String[] args) {
+        Device myPhone = new Smartphone("MyPhone", "Android");
+        myPhone.start();
+        myPhone.connect();
+        myPhone.disconnect();
+    }
+}
