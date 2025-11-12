@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LineCounter": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\infosys\\source\\repos\\OOP2025\\FormApps\\CarReportSystem\\Form1.Designer.cs\""
+    }
+  }
+}
