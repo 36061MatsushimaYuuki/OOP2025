@@ -22,6 +22,6 @@ namespace WordCounter {
         }
 
         protected override void Terminate() =>
-            Console.WriteLine($"{_count} 個");
+            Console.WriteLine($"{_word}は {_count} 個含まれています");
     }
 }
