@@ -5,7 +5,7 @@ namespace PublicCounter {
     internal class Program {
         static void Main(string[] args) {
             string? filePath = "";
-            while (string.IsNullOrWhiteSpace(filePath)) {
+            while (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath)) {
                 Console.Write("ファイルパスを入力: ");
                 filePath = Console.ReadLine();
             }
