@@ -8,6 +8,9 @@ namespace PublicCounter {
             while (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath)) {
                 Console.Write("ファイルパスを入力: ");
                 filePath = Console.ReadLine();
+                if(!string.IsNullOrWhiteSpace(filePath)) {
+                    filePath = filePath.Replace("\"", "");
+                }
             }
             string? word = "";
             while (string.IsNullOrWhiteSpace(word)) {
