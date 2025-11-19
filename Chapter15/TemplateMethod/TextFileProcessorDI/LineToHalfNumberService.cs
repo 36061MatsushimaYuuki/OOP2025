@@ -10,8 +10,9 @@ namespace TextFileProcessorDI {
 
         public void Initialize(string fname) =>
             _count = 0;
-
+        
         public void Execute(string line) {
+            //string.Normalize だと英字も変換されてしまうため採用しない
             var output = new StringBuilder();
             foreach (char c in line) {
                 if(c >= '０' && c <= '９') {
