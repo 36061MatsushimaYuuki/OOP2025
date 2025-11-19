@@ -12,13 +12,13 @@ namespace TextFileProcessorDI {
             _count = 0;
 
         public void Execute(string line) {
-            string output = "";
+            var output = new StringBuilder();
             foreach (char c in line) {
                 if(c >= '０' && c <= '９') {
-                    output += (char)(c - 0xFEE0);
+                    output.Append((char)(c - 0xFEE0));
                     _count++;
                 } else {
-                    output += c;
+                    output.Append(c);
                 }
             }
             Console.WriteLine(output);
