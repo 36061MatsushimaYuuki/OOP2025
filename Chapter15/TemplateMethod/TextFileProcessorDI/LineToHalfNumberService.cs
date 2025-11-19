@@ -15,18 +15,13 @@ namespace TextFileProcessorDI {
             //string.Normalize だと英字も変換されてしまうため採用しない
             var output = new StringBuilder();
             foreach (char c in line) {
-                if(c >= '０' && c <= '９') {
-                    output.Append((char)(c - 0xFEE0));
-                    _count++;
-                } else {
-                    output.Append(c);
-                }
+                output.Append((c >= '０' && c <= '９') ? (char)(c - 0xFEE0) : c);
             }
             Console.WriteLine(output);
         }
 
         public void Terminate() {
-            Console.WriteLine($"(半角への変換数：{_count})");
+            return;
         }
     }
 }
