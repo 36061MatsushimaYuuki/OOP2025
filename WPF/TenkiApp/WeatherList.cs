@@ -5,40 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TenkiApp {
-    class WeatherList {
+    public class WeatherList {
         public Hourly hourly { get; set; }
 
         public static string WeatherDescription(int code) {
             switch (code) {
                 case 0:
-                    return "快晴";
+                    return "☀";
                 case 1:
+                    return "🌤";
                 case 2:
+                    return "🌥";
                 case 3:
-                    return "晴れ、薄曇り、曇り";
+                    return "☁";
                 case 45:
+                    return "霧";
                 case 48:
-                    return "霧、着氷霧";
+                    return "着氷霧";
                 case 51:
                 case 53:
                 case 55:
-                    return "霧雨: 弱い、中程度、強い";
+                    return "🌂";
                 case 56:
                 case 57:
-                    return "着氷性の霧雨: 弱い、強い";
+                    return "🌂";
                 case 61:
                 case 63:
+                    return "☂";
                 case 65:
-                    return "雨: 小雨、中雨、大雨";
+                    return "☔";
                 case 66:
                 case 67:
                     return "着氷性の雨: 弱い、強い";
                 case 71:
                 case 73:
+                    return "🌨️";
                 case 75:
-                    return "雪: 小雪、中雪、大雪";
+                    return "☃️";
                 case 77:
-                    return "霙（みぞれ）";
+                    return "❄️☂";
                 case 80:
                 case 81:
                 case 82:
@@ -47,10 +52,10 @@ namespace TenkiApp {
                 case 86:
                     return "にわか雪: 弱い、強い";
                 case 95:
-                    return "雷雨: 弱いまたは中程度";
+                    return "🌩";
                 case 96:
                 case 99:
-                    return "雷雨: 小さい、大きいひょうを伴う";
+                    return "⛈";
                 default:
                     return "不明";
             }

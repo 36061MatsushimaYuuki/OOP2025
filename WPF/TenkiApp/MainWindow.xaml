@@ -24,6 +24,8 @@
 
             <TextBlock Grid.Row="0" Text="TenkiApp🌡️" FontSize="30" Margin="5,0,0,0"/>
 
+            <TextBlock x:Name="TimeBox" Grid.Row="0" Grid.Column="1" Text="" FontSize="30" Margin="0,0,5,0" TextAlignment="Right"/>
+
             <Border Grid.Row="1" Grid.RowSpan="4" Margin="10,5,10,10" Background="#77A5FF" CornerRadius="10"/>
             <TextBlock Grid.Row="1" Text="地図をクリックして場所を選択" Margin="15,15,0,0"/>
 
@@ -35,7 +37,43 @@
 
             <TextBlock Grid.Row="1" Grid.Column="1" x:Name="LocationBlock" Text="場所名: " FontSize="20" Margin="15,15,15,0"/>
 
-            <ScrollViewer Style="{StaticResource ModernScrollViewer}" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Margin="10,0,10,0">
+            <ScrollViewer Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Margin="10,0,10,10" PreviewMouseWheel="WeatherScrollViewer_PreviewMouseWheel" ScrollChanged="WeatherScrollViewer_ScrollChanged">
+                <ScrollViewer.Resources>
+                    <!-- 横向きスクロールバーのスタイル -->
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#3370FF"/>
+                        <Setter Property="Height" Value="8"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ScrollBar">
+                                    <Grid>
+                                        <!-- トラック領域（角丸） -->
+                                        <Border Background="#77A5FF"
+                                    Height="8" VerticalAlignment="Center"
+                                    CornerRadius="4"/>
+                                        <!-- 標準の Track と Thumb を使う -->
+                                        <Track x:Name="PART_Track"
+                                   IsDirectionReversed="False">
+                                            <!-- Thumbの見た目を角丸ボーダーにする -->
+                                            <Track.Thumb>
+                                                <Thumb>
+                                                    <Thumb.Template>
+                                                        <ControlTemplate TargetType="Thumb">
+                                                            <Border Background="Gray"
+                                                        Height="8"
+                                                        CornerRadius="4"/>
+                                                        </ControlTemplate>
+                                                    </Thumb.Template>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ScrollViewer.Resources>
                 <StackPanel x:Name="WeatherPanel" Orientation="Horizontal"/>
             </ScrollViewer>
         </Grid>

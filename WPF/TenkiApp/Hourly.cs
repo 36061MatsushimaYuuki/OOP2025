@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TenkiApp {
-    class Hourly {
+    public class Hourly {
         public List<string> time { get; set; }
         public List<int> weather_code { get; set; }
         public List<double> temperature_2m { get; set; }
