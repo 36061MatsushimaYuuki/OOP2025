@@ -60,7 +60,7 @@ namespace TenkiApp {
             State = msg.state ?? "";
             City = msg.city ?? "";
 
-            LocationBlock.Text = $"場所名: {Country} {State} {City}";
+            LocationBlock.Text = $"📍 場所名: {Country} {State} {City}";
 
             WeatherMethod();
         }
@@ -80,7 +80,7 @@ namespace TenkiApp {
             <body style='margin:0'>
               <div id='map' style='width:100%;height:100vh;'></div>
               <script>
-                var map = L.map('map').setView([{lat}, {lng}], 8);
+                var map = L.map('map').setView([{lat}, {lng}], 10);
                 L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
                   attribution: '© OpenStreetMap contributors'
                 }}).addTo(map);
@@ -158,6 +158,7 @@ namespace TenkiApp {
             try {
                 WeatherPanel.Children.Clear();
                 WeatherScroll.ScrollToHorizontalOffset(0);
+                LoadingOverlay.Visibility = Visibility.Visible;
                 await GetLocationWeather();
             }
             catch (Exception ex) {
@@ -165,6 +166,7 @@ namespace TenkiApp {
             }
             finally {
                 isFetchingWeather = false; // 処理終了後、フラグを解除
+                LoadingOverlay.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -205,8 +207,10 @@ namespace TenkiApp {
                         var axis = new CategoryAxis {
                             Position = AxisPosition.Bottom,
                             Angle = 45,
-                            TextColor = OxyColors.Black,
-                            TicklineColor = OxyColors.Navy,
+                            TextColor = OxyColors.White, // ダークテーマに合わせて白に
+                            TicklineColor = OxyColor.FromAColor(100, OxyColors.White), // 淡い白
+                            MajorGridlineStyle = LineStyle.Solid,
+                            MajorGridlineColor = OxyColor.FromAColor(50, OxyColors.White), // 薄い白のグリッド線
                             MinorTickSize = 0
                         };
                         axis.Labels.AddRange(labels);
@@ -214,28 +218,32 @@ namespace TenkiApp {
 
                         plotModel.Axes.Add(new LinearAxis {
                             Position = AxisPosition.Left,
-                            TextColor = OxyColors.Black,
-                            TicklineColor = OxyColors.Navy,
+                            TextColor = OxyColors.White, // ダークテーマに合わせて白に
+                            TicklineColor = OxyColor.FromAColor(100, OxyColors.White),
                             MajorGridlineStyle = LineStyle.Solid,
-                            MajorGridlineColor = OxyColors.Navy,
+                            MajorGridlineColor = OxyColor.FromAColor(50, OxyColors.White),
                             MinorGridlineStyle = LineStyle.None,
-                            Title = "",
-                            Minimum = minTemp - 2,   // 最低気温より少し下まで
-                            Maximum = maxTemp + 2    // 最高気温より少し上まで
+                            Title = "気温 (°C)", // タイトルに単位を追記
+                            TitleColor = OxyColors.White,
+                            Minimum = minTemp - 2,
+                            Maximum = maxTemp + 2
                         });
 
+                        // グラフの背景を完全に透明にし、コンテナの色（#304060）が透けるようにする
                         plotModel.Background = OxyColors.Transparent;
                         plotModel.PlotAreaBackground = OxyColors.Transparent;
                         plotModel.TextColor = OxyColors.DimGray;
                         plotModel.PlotAreaBorderColor = OxyColors.Transparent;
 
-                        var seriesColor = OxyColors.OrangeRed;
+                        // 線の色を視認性の高い明るい色に変更
+                        var seriesColor = OxyColor.FromRgb(255, 190, 0); // 明るいオレンジイエロー
                         var series = new LineSeries {
                             Color = seriesColor,
-                            StrokeThickness = 2.5,
+                            StrokeThickness = 3.0, // 線を太く
                             MarkerType = MarkerType.Circle,
-                            MarkerSize = 4,
+                            MarkerSize = 5,
                             MarkerFill = seriesColor,
+                            // トラッカーを無効化（マウス操作がないため不要）
                             TrackerFormatString = ""
                         };
 
@@ -353,64 +361,72 @@ namespace TenkiApp {
                             weatherText = WeatherList.WeatherDescription(codes.First());
                         }
 
-                        var headerPanel = new Grid { Margin = new Thickness(5) };
+                        var infoGrid = new Grid { Margin = new Thickness(15, 0, 15, 0), Height = 60 }; // 高さを固定して安定化
+                        infoGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // 左側の列 (日付/気温)
+                        infoGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) }); // 右側の列 (天気)
 
-                        headerPanel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                        headerPanel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        // 1. 左側コンテナ (日付と最高/最低気温)
+                        var leftPanel = new StackPanel { Orientation = Orientation.Vertical, VerticalAlignment = System.Windows.VerticalAlignment.Center };
+                        Grid.SetColumn(leftPanel, 0);
 
+                        // 日付
                         var dateBlock = new TextBlock {
-                            Text = $"{dayGroup.Key:MM/dd}",
-                            Foreground = Brushes.Black,
+                            Text = $"{dayGroup.Key:MM/dd} ({dayGroup.Key:ddd})",
+                            Foreground = Brushes.White,
                             FontWeight = System.Windows.FontWeights.Bold,
-                            FontSize = 30,
-                            Margin = new Thickness(5, 0, 0, 5)
+                            FontSize = 22,
+                            Margin = new Thickness(0, 0, 0, 3) // 気温との間に少し隙間
                         };
-                        Grid.SetColumn(dateBlock, 0);
-                        headerPanel.Children.Add(dateBlock);
+                        leftPanel.Children.Add(dateBlock);
 
-                        // 表示用の TextBlock を追加
-                        var weatherBlock = new TextBlock {
-                            Text = $"{weatherText}",
-                            Foreground = Brushes.Black,
-                            FontSize = 30,
-                            Margin = new Thickness(5, 0, 0, 5),
-                            TextAlignment = System.Windows.TextAlignment.Right,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right
-                        };
-                        Grid.SetColumn(weatherBlock, 1);
-                        headerPanel.Children.Add(weatherBlock);
-
-                        var infoPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(5) };
-                        infoPanel.Children.Add(new TextBlock {
-                            Text = $"{maxTemp:F1}℃",
-                            Foreground = Brushes.Red,
-                            FontWeight = System.Windows.FontWeights.Bold,
-                            FontSize = 18,
-                            Margin = new Thickness(5, 0, 10, 0)
+                        // 最高・最低気温
+                        var tempPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                        tempPanel.Children.Add(new TextBlock {
+                            Text = $"{maxTemp:F1}°C", // 小数点以下を非表示
+                            Foreground = Brushes.OrangeRed,
+                            FontWeight = System.Windows.FontWeights.ExtraBold,
+                            FontSize = 20,
+                            Margin = new Thickness(0, 0, 10, 0)
                         });
-                        infoPanel.Children.Add(new TextBlock {
-                            Text = $"{minTemp:F1}℃",
-                            Foreground = Brushes.Blue,
-                            FontWeight = System.Windows.FontWeights.Bold,
+                        tempPanel.Children.Add(new TextBlock {
+                            Text = $"{minTemp:F1}°C", // 小数点以下を非表示
+                            Foreground = Brushes.DeepSkyBlue,
+                            FontWeight = System.Windows.FontWeights.ExtraBold,
                             FontSize = 18
                         });
+                        leftPanel.Children.Add(tempPanel);
 
+                        infoGrid.Children.Add(leftPanel);
+
+                        // 2. 右側コンテナ (天気)
+                        var weatherBlock = new TextBlock {
+                            Text = $"{weatherText}",
+                            Foreground = Brushes.LightGray,
+                            FontSize = 38, // ✨ 天気をさらに大きく (32 -> 38)
+                            FontWeight = System.Windows.FontWeights.SemiBold,
+                            TextAlignment = System.Windows.TextAlignment.Right, // ✨ 右寄せ
+                            VerticalAlignment = System.Windows.VerticalAlignment.Center
+                        };
+                        Grid.SetColumn(weatherBlock, 1);
+                        infoGrid.Children.Add(weatherBlock);
+
+                        // 最終コンテナ (グラフと情報をまとめる)
                         var container = new StackPanel { Orientation = Orientation.Vertical };
 
-                        container.Children.Add(headerPanel);
-                        container.Children.Add(infoPanel);
-                        container.Children.Add(view);
+                        // ✨ 日付と天気、最高最低気温をまとめたinfoGridを最初に追加
+                        container.Children.Add(infoGrid);
+                        container.Children.Add(view); // グラフをその下に追加
 
                         var borderedContainer = new Border {
-                            Background = Brushes.LightGray,          // 背景色
-                            CornerRadius = new CornerRadius(10),     // 丸み
-                            Margin = new Thickness(4),               // 外側余白
-                            Child = container                        // ←ここが重要
+                            Background = Brushes.Transparent,
+                            CornerRadius = new CornerRadius(10),
+                            Margin = new Thickness(4),
+                            Child = container
                         };
 
                         WeatherPanel.Children.Add(borderedContainer);
                     }
-                    LocationBlock.Text = $"場所名: {Country} {State} {City}";
+                    LocationBlock.Text = $"📍 場所名: {Country} {State} {City}";
                 } else {
                     Console.WriteLine("データが取得できませんでした。");
                 }
