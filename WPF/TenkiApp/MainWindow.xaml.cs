@@ -211,7 +211,8 @@ namespace TenkiApp {
                             TicklineColor = OxyColor.FromAColor(100, OxyColors.White), // 淡い白
                             MajorGridlineStyle = LineStyle.Solid,
                             MajorGridlineColor = OxyColor.FromAColor(50, OxyColors.White), // 薄い白のグリッド線
-                            MinorTickSize = 0
+                            MinorTickSize = 0,
+                            Maximum = dayGroup.Count() + 1.0
                         };
                         axis.Labels.AddRange(labels);
                         plotModel.Axes.Add(axis);
@@ -263,34 +264,34 @@ namespace TenkiApp {
 
                             if (rainFlag) {
                                 plotModel.Annotations.Add(new RectangleAnnotation {
-                                    MinimumX = item.idx - 0.5,
-                                    MaximumX = item.idx + 0.5,
+                                    MinimumX = item.idx + 0.5,
+                                    MaximumX = item.idx + 1.5,
                                     Fill = OxyColor.FromAColor(100, OxyColors.Blue), // 半透明の青
                                     Layer = AnnotationLayer.BelowSeries
                                 });
                             } else if (snowFlag) {
                                 plotModel.Annotations.Add(new RectangleAnnotation {
-                                    MinimumX = item.idx - 0.5,
-                                    MaximumX = item.idx + 0.5,
+                                    MinimumX = item.idx + 0.5,
+                                    MaximumX = item.idx + 1.5,
                                     Fill = OxyColor.FromAColor(100, OxyColors.LightBlue), // 雪 → 半透明の白
                                     Layer = AnnotationLayer.BelowSeries
                                 });
                             } else if (cloudyFlag) {
                                 plotModel.Annotations.Add(new RectangleAnnotation {
-                                    MinimumX = item.idx - 0.5,
-                                    MaximumX = item.idx + 0.5,
+                                    MinimumX = item.idx + 0.5,
+                                    MaximumX = item.idx + 1.5,
                                     Fill = OxyColor.FromAColor(100, OxyColors.Gray), // 曇り → 半透明の薄いグレー
                                     Layer = AnnotationLayer.BelowSeries
                                 });
                             } else {
                                 plotModel.Annotations.Add(new RectangleAnnotation {
-                                    MinimumX = item.idx - 0.5,
-                                    MaximumX = item.idx + 0.5,
+                                    MinimumX = item.idx + 0.5,
+                                    MaximumX = item.idx + 1.5,
                                     Fill = OxyColor.FromAColor(100, OxyColors.Orange), // 半透明の橙
                                     Layer = AnnotationLayer.BelowSeries
                                 });
                             }
-                            series.Points.Add(new DataPoint(item.idx, item.x.temp));
+                            series.Points.Add(new DataPoint(item.idx + 0.5, item.x.temp));
 
                             // 最初の日の場合のみ、現在時刻に最も近い点を特定
                             if (isFirstDay) {
@@ -310,7 +311,7 @@ namespace TenkiApp {
                         // 特定の点が見つかった場合、PointAnnotationを追加
                         if (targetX != -1) {
                             plotModel.Annotations.Add(new PointAnnotation {
-                                X = targetX,
+                                X = targetX + 0.5,
                                 Y = targetY,
                                 Size = 6, // マーカーより少し大きく
                                 Fill = OxyColors.Blue,
