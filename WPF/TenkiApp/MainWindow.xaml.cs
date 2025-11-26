@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Net.Http;
@@ -30,12 +31,12 @@ namespace TenkiApp {
         public string State = "";
         public string City = "";
         private DispatcherTimer timer;
+        private bool isFetchingWeather = false;
 
         public MainWindow() {
             InitializeComponent();
             InitTimer();
             Loaded += async (_, __) => {
-                await InitWebView();            // まず地図とメッセージ購読を用意
                 await InitLocationByIpAsync();  // 次にIP→住所を取得して、JSからpostMessageを発火
             };
         }
@@ -61,7 +62,6 @@ namespace TenkiApp {
 
             LocationBlock.Text = $"場所名: {Country} {State} {City}";
 
-            WeatherPanel.Children.Clear();
             WeatherMethod();
         }
 
@@ -148,7 +148,24 @@ namespace TenkiApp {
         }
 
         private async void WeatherMethod() {
-            await GetLocationWeather();
+            // 既にデータ取得中であれば、処理を中断
+            if (isFetchingWeather) {
+                return;
+            }
+
+            isFetchingWeather = true; // 処理開始フラグを立てる
+
+            try {
+                WeatherPanel.Children.Clear();
+                WeatherScroll.ScrollToHorizontalOffset(0);
+                await GetLocationWeather();
+            }
+            catch (Exception ex) {
+                Console.WriteLine($"WeatherMethodエラー：{ex.Message}");
+            }
+            finally {
+                isFetchingWeather = false; // 処理終了後、フラグを解除
+            }
         }
 
         private async Task GetLocationWeather() {
@@ -171,6 +188,8 @@ namespace TenkiApp {
                     var grouped = hourlyTimes
                         .Select((dt, idx) => new { dt, temp = temps[idx], code = codes[idx] })
                         .GroupBy(x => x.dt.Date);
+
+                    bool isFirstDay = true; // 最初の日のフラグ
 
                     foreach (var dayGroup in grouped) {
                         var plotModel = new PlotModel();
@@ -220,12 +239,79 @@ namespace TenkiApp {
                             TrackerFormatString = ""
                         };
 
-                        int idx = 0;
-                        foreach (var item in dayGroup) {
-                            series.Points.Add(new DataPoint(idx, item.temp));
-                            idx++;
+                        // 現在時刻のデータポイントを特定するための変数
+                        double targetX = -1;
+                        double targetY = -1;
+
+                        foreach (var item in dayGroup.Select((x, idx) => new { x, idx })) {
+                            bool rainFlag = (item.x.code >= 51 && item.x.code <= 67) ||
+                                            (item.x.code >= 80 && item.x.code <= 82) ||
+                                            (item.x.code >= 95 && item.x.code <= 99);
+
+                            bool snowFlag = (item.x.code >= 71 && item.x.code <= 77) ||
+                                            (item.x.code == 85 || item.x.code == 86);
+
+                            bool cloudyFlag = (item.x.code == 2 || item.x.code == 3);
+
+                            if (rainFlag) {
+                                plotModel.Annotations.Add(new RectangleAnnotation {
+                                    MinimumX = item.idx - 0.5,
+                                    MaximumX = item.idx + 0.5,
+                                    Fill = OxyColor.FromAColor(100, OxyColors.Blue), // 半透明の青
+                                    Layer = AnnotationLayer.BelowSeries
+                                });
+                            } else if (snowFlag) {
+                                plotModel.Annotations.Add(new RectangleAnnotation {
+                                    MinimumX = item.idx - 0.5,
+                                    MaximumX = item.idx + 0.5,
+                                    Fill = OxyColor.FromAColor(100, OxyColors.LightBlue), // 雪 → 半透明の白
+                                    Layer = AnnotationLayer.BelowSeries
+                                });
+                            } else if (cloudyFlag) {
+                                plotModel.Annotations.Add(new RectangleAnnotation {
+                                    MinimumX = item.idx - 0.5,
+                                    MaximumX = item.idx + 0.5,
+                                    Fill = OxyColor.FromAColor(100, OxyColors.Gray), // 曇り → 半透明の薄いグレー
+                                    Layer = AnnotationLayer.BelowSeries
+                                });
+                            } else {
+                                plotModel.Annotations.Add(new RectangleAnnotation {
+                                    MinimumX = item.idx - 0.5,
+                                    MaximumX = item.idx + 0.5,
+                                    Fill = OxyColor.FromAColor(100, OxyColors.Orange), // 半透明の橙
+                                    Layer = AnnotationLayer.BelowSeries
+                                });
+                            }
+                            series.Points.Add(new DataPoint(item.idx, item.x.temp));
+
+                            // 最初の日の場合のみ、現在時刻に最も近い点を特定
+                            if (isFirstDay) {
+                                // 現在時刻の1時間切り捨てを取得
+                                DateTime nowHour = DateTime.Now.Date.AddHours(DateTime.Now.Hour);
+
+                                // データポイントの時刻が nowHour と一致する場合
+                                if (item.x.dt == nowHour) {
+                                    targetX = item.idx;
+                                    targetY = item.x.temp;
+                                    isFirstDay = false; // 最初の日の処理で一度見つけたらフラグを解除
+                                }
+                            }
                         }
                         plotModel.Series.Add(series);
+
+                        // 特定の点が見つかった場合、PointAnnotationを追加
+                        if (targetX != -1) {
+                            plotModel.Annotations.Add(new PointAnnotation {
+                                X = targetX,
+                                Y = targetY,
+                                Size = 6, // マーカーより少し大きく
+                                Fill = OxyColors.Blue,
+                                Shape = MarkerType.Diamond,
+                                Layer = AnnotationLayer.AboveSeries
+                            });
+                        }
+
+                        isFirstDay = false; // 最初のグラフの処理が完了したので、次のループでは適用しない
 
                         var controller = new PlotController();
                         controller.UnbindMouseWheel();
@@ -353,11 +439,27 @@ namespace TenkiApp {
                 pos += child.ActualWidth + 8; // 各要素の幅分ずつ進める
             }
 
+            // スクロール可能な最大オフセットを正確に計算
+            // WeatherPanelの全幅 - ScrollViewerの表示領域幅
+            double maxScrollableOffset = scrollViewer.ScrollableWidth;
+
             // 次に移動する位置を決定
             double targetOffset = currentOffset;
             if (e.Delta < 0) {
-                // ホイール下 → 次の要素へ
+                // ホイール下 → 次の要素へ (右方向)
+
+                // 次のグラフの開始位置を検索
                 targetOffset = offsets.FirstOrDefault(x => x > currentOffset + 1);
+
+                // 修正: 次の目標位置が最大スクロール可能範囲を超えていたら、最大値に制限する
+                if (targetOffset == 0 && currentOffset > maxScrollableOffset - 1) {
+                    // FirstOrDefaultが0を返し、かつ既に右端にいる場合は、現在の位置を維持 (または最大値に)
+                    targetOffset = maxScrollableOffset;
+                } else if (targetOffset > maxScrollableOffset) {
+                    // 計算された次のターゲット位置が最大値を超えたら、最大値に制限
+                    targetOffset = maxScrollableOffset;
+                }
+
             } else if (e.Delta > 0) {
                 // ホイール上 → 前の要素へ
                 targetOffset = offsets.LastOrDefault(x => x < currentOffset - 1);

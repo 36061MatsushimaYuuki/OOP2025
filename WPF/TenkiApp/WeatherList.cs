@@ -19,9 +19,9 @@ namespace TenkiApp {
                 case 3:
                     return "☁";
                 case 45:
-                    return "霧";
+                    return "🌫";
                 case 48:
-                    return "着氷霧";
+                    return "🌫❄️";
                 case 51:
                 case 53:
                 case 55:
@@ -36,7 +36,7 @@ namespace TenkiApp {
                     return "☔";
                 case 66:
                 case 67:
-                    return "着氷性の雨: 弱い、強い";
+                    return "🌧❄️";
                 case 71:
                 case 73:
                     return "🌨️";
@@ -47,10 +47,10 @@ namespace TenkiApp {
                 case 80:
                 case 81:
                 case 82:
-                    return "にわか雨: 弱い、中程度、激しい";
+                    return "🌦";
                 case 85:
                 case 86:
-                    return "にわか雪: 弱い、強い";
+                    return "🌨";
                 case 95:
                     return "🌩";
                 case 96:
